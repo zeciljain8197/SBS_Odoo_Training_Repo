@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_constructors_form" model="ir.ui.view">
+        <field name="name">view.constructors.form</field>
+        <field name="model">f1.constructors</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="test_entry"/>
+                </header>
+                <sheet>
+<!--                    <widget name="web_ribbon" title="Champion" bg_color="bg-danger" attrs="{'invisible': [('engine', 'not in',['redbull', 'mercedes'])]}"/>-->
+                    <widget name="web_ribbon" title="Title Contender" bg_color="bg-danger" attrs="{'invisible': [('engine', '!=', 'mercedes')]}"/>
+                    <widget name="web_ribbon" title="Champion" bg_color="bg-danger" attrs="{'invisible': [('engine', '!=', 'redbull')]}"/>
+                    <label for="name"/>
+                    <h1>
+                        <field name="name" placeholder="Enter name of constructor ex. Mercedes"/>
+                    </h1>
+                    <group colspan="4" col="4">
+                        <field name="const_id" required="1" widget="char"/>
+                        <field name="active"/>
+                        <field name="entry_fees" widget="char"/>
+                        <field name="st_date"/>
+                        <field name="nxt_date"/>
+                        <field name="password" password="1"/>
+                        <label for="test_entry" string="Entry_test"/>
+                        <field name="test_entry" nolabel="1"/>
+                        <field name="email" required="1" widget="email"/>
+                        <field name="webst" widget="url"/>
+                        <field name="sign_in" widget="float_time"/>
+                        <field name="engine" widget="radio"/>
+                        <field name="priority" widget="priority"/>
+                        <field name="sign_out" widget="float_time" invisible="1"/>
+
+                    </group>
+                    <separator string="Notes"/>
+                    <field name="const_notes"/>
+                    <notebook>
+                        <page name="pg_driver1_notes" string="Driver1 Notes">
+                            <field name="driver1_notes"/>
+                        </page>
+                        <page name="pg_driver2_notes" string="Driver2 Notes">
+                            <field name="driver2_notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    This is the end of F1 fan page module
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="view_constructors_tree" model="ir.ui.view">
+        <field name="name">view.constructors.tree</field>
+        <field name="model">f1.constructors</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="const_id"/>
+                <field name="active"/>
+                <field name="name"/>
+                <field name="entry_fees"/>
+                <field name="engine"/>
+                <field name="st_date"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_constructors" model="ir.actions.act_window">
+        <field name="name">Constructors</field>
+        <field name="res_model">f1.constructors</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_constructors_main" name="Formula1 Fan Management"/>
+    <menuitem id="menu_constructors_sub" name="Constructors Info" parent="f1.menu_constructors_main" action = "f1.action_constructors"/>
+</odoo>

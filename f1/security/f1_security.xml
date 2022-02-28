@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.module.category" id="module_category_f1">
+        <field name="description">Helps you manage Formula 1 fans portal.</field>
+        <field name="name">Formula1</field>
+        <field name="sequence">12</field>
+    </record>
+    <record id="grp_f1_head" model="res.groups">
+        <field name="name">Head</field>
+<!--        <field name="category_id" ref="f1.module_category_f1"/>-->
+    </record>
+    <record id="grp_f1_driver" model="res.groups">
+        <field name="name">Drivers</field>
+<!--        <field name="category_id" ref="f1.module_category_f1"/>-->
+    </record>
+</odoo>

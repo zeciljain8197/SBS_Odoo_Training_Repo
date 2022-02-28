@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_constructors_head,access.constructors.head,model_f1_constructors,grp_f1_head,1,1,1,1
+access_constructors_driver,access.constructors.driver,model_f1_constructors,grp_f1_driver,1,1,1,0
