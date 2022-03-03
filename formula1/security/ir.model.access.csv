@@ -1,0 +1,10 @@
+# Created a CSV file for giving various access rights to different defined groups into various models of the module.
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_constructors_owner,access.constructors.owner,model_formula1_constructors,grp_formula1_owner,1,1,1,1
+access_constructors_team_p,access.constructors.team_p,model_formula1_constructors,grp_formula1_team_p,1,1,1,0
+access_constructors_driver,access.constructors.driver,model_formula1_constructors,grp_formula1_driver,1,1,0,0
+access_driver_team_p, access.driver.team_p,model_formula1_driver,grp_formula1_team_p,1,1,1,1
+access_driver_driver,access.driver.driver,model_formula1_driver,grp_formula1_driver,1,1,0,0
+access_fans_driver,access.fans.driver,model_formula1_fans,grp_formula1_driver,1,1,1,0
+access_circuit_owner,access.circuit.owner,model_formula1_circuit,grp_formula1_owner,1,1,1,1
+access_part_owner,access.part.owner,model_formula1_part,grp_formula1_owner,1,1,1,1
