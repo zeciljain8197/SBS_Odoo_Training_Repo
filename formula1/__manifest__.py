@@ -9,6 +9,7 @@
     'data': [
         'security/formula1_security.xml',
         'security/ir.model.access.csv',
+        'data/constr_sequence.xml',
         'views/constructors_view.xml',
     ],
     'installable': True,

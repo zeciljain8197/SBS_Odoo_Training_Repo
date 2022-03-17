@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--Creating a xml file for creating the users for this module-->
-<!--Any xml file made for odoo module will always have everything defined in odoo tags-->
 <odoo>
-    <!--Records created for defining various groups for this module-->
     <record id="grp_formula1_owner" model="res.groups">
         <field name="name">Owner</field>
     </record>

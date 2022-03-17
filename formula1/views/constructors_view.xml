@@ -9,8 +9,29 @@
                     <field name="state" widget="statusbar" statusbar_visible="s1,s2,s3,s4,s5" clickable="1"/>
                 </header>
                 <sheet>
-                    <widget name="web_ribbon" title="Title Contender" bg_color="bg-danger" attrs="{'invisible': [('engine', '!=', 'mercedes')]}"/>
-                    <widget name="web_ribbon" title="Champion" bg_color="bg-danger" attrs="{'invisible': [('engine', '!=', 'redbull')]}"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_constructors)d"
+                                string="Open records"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-exchange"/>
+                        <button name="cur_user"
+                                string="Current User"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-user"/>
+                        <button name="%(action_fans)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-meh-o"
+                                context="{'search_default_constr':active_id}">
+                                <field name="fan_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Title Contender" bg_color="bg-danger"
+                            attrs="{'invisible': [('engine', '!=', 'mercedes')]}"/>
+                    <widget name="web_ribbon" title="Champion" bg_color="bg-danger"
+                            attrs="{'invisible': [('engine', '!=', 'redbull')]}"/>
                     <label for="name"/>
                     <h1>
                         <field name="name" placeholder="Enter name of constructor ex. Mercedes"/>
@@ -19,6 +40,7 @@
                     <separator string=""/>
                     <group colspan="4" col="4">
                         <field name="const_id" required="1"/>
+                        <field name="c_code"/>
                         <field name="active"/>
                         <field name="entry_fees"/>
                         <field name="currency_id"/>
@@ -28,20 +50,24 @@
                         <field name="password" password="1"/>
                         <label for="test_entry" string="Entry_test"/>
                         <field name="test_entry" nolabel="1"/>
-                        <field name="email" required="1" widget="email"/>
+                        <field name="email" widget="email"/>
                         <field name="webst" widget="url"/>
-                        <field name="sign_in" widget="float_time"/>
+                        <field name="sign_in"/>
                         <field name="engine" widget="radio"/>
-                        <field name="priority" widget="priority"/>
-                        <field name="driver_id" widget="selection" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="priority" widget="priority" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="driver_id" widget="selection"/>
                         <field name="extra_info"/>
                         <field name="docu" filename="file_name"/>
                         <field name="t_1"/>
                         <field name="t_2"/>
                         <field name="t_3" widget="percentpie"/>
-                        <field name="parent_id"/>
+                        <field name="parent_id" domain="[('id','!=',active_id)]"/>
                         <field name="file_name" invisible="1"/>
                         <field name="sign_out" widget="float_time" invisible="1"/>
+                        <field name="podiums"/>
+                        <field name="wins" attrs="{'readonly':[('podiums','=',False)]}"/>
+                        <field name="winner"/>
+                        <field name="current_user"/>
                     </group>
                     <separator string="Notes"/>
                     <field name="const_notes"/>
@@ -54,9 +80,21 @@
                         </page>
                         <page name="pg_fans_notes" string="Top Fans notes">
                             <field name="fan_ids"/>
+                            <button name="new_one2many"
+                            string="Fans"
+                            type="object"
+                            icon="fa-cogs"/>
+                            <button name="unlink_rec"
+                            string="Fan Remover"
+                            type="object"
+                            icon="fa-refresh"/>
+                            <button name="unlink_all"
+                            string="All fan remover"
+                            type="object"
+                            icon="fa-times"/>
                         </page>
                         <page name="pg_fav_circ_notes" string="Fav Circuits">
-                            <field name="fav_ids" widget="many2many_tags"/>
+                            <field name="fav_ids" widget="many2many_tags" options="{'no_create': True, 'no_open': True}"/>
                         </page>
                         <page name="pg_part_notes" string="Part Suppliers">
                             <field name="part_ids" widget="many2many_checkboxes"/>
@@ -64,11 +102,30 @@
                         <page name="pg_child_notes" string="Consumer Teams">
                             <field name="child_ids"/>
                         </page>
-
+                        <page name="pg_win_notes" string="Last wins" attrs="{'invisible':[('winner','=',False)]}">
+                            <field name="win_notes"/>
+                        </page>
                     </notebook>
                 </sheet>
                 <footer>
-                    This is the end of F1 fan page module
+                    <button name="new_record"
+                            string="Driver"
+                            type="object"
+                            icon="fa-user"/>
+                    <button name="update_rec"
+                            string="Circuits"
+                            type="object"
+                            icon="fa-exchange"/>
+                    <button name="link_ids"
+                            string="Link Circuits"
+                            type="object"
+                            icon="fa-pencil-square-o"/>
+                    <button name="button_for_env"
+                            string="Env Results"
+                            type="object"/>
+                    <button name="create_sequence"
+                            string="Sequence"
+                            type="object"/>
                 </footer>
             </form>
         </field>
@@ -80,24 +137,51 @@
             <tree>
                 <field name="sequence" widget="handle"/>
                 <field name="const_id"/>
+                <field name="c_code"/>
                 <field name="active"/>
                 <field name="name"/>
                 <field name="entry_fees"/>
                 <field name="engine"/>
-                <field name="state" widget="badge" decoration-success="state=='s1'" decoration-info="state=='s2'" decoration-danger="state=='s3'" decoration-warning="state=='s4'" decoration-primary="state=='s5'"/>
+                <field name="state" widget="badge" decoration-success="state=='s1'" decoration-info="state=='s2'"
+                       decoration-danger="state=='s3'" decoration-warning="state=='s4'"
+                       decoration-primary="state=='s5'"/>
                 <field name="st_date"/>
             </tree>
+        </field>
+    </record>
+    <record id="view_constructors_search" model="ir.ui.view">
+        <field name="name">Constructors</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="const_id"/>
+                <field name="active"/>
+                <field name="name"/>
+                <field name="entry_fees"/>
+                <field name="engine"/>
+                <field name="st_date"/>
+                <filter name="fil_red" string="redbull" domain="[('engine','=','redbull')]"/>
+                <filter name="fil_mer" string="mercedes" domain="[('engine','=','mercedes')]"/>
+                <filter name="fil_fer" string="ferrari" domain="[('engine','=','ferrari')]"/>
+                <filter name="fil_por" string="porsche" domain="[('engine','=','porsche')]"/>
+                <filter name="fil_jd" string="Join Date" date="st_date"/>
+                <filter name="grp_by_date" string="Date" context="{'group_by':'st_date'}"/>
+                <filter name="grp_by_engine" string="Engine" context="{'group_by':'engine'}"/>
+                <filter name="grp_by_states" string="States" context="{'group_by':'state'}"/>
+            </search>
         </field>
     </record>
     <record id="action_constructors" model="ir.actions.act_window">
         <field name="name">Constructors</field>
         <field name="res_model">formula1.constructors</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,search</field>
+<!--        <field name="context">{'group_by':'state'}</field>-->
     </record>
 
     <menuitem id="menu_constructors_main" name="Formula1 Fan Management"/>
     <menuitem id="menu_constructors_sub" name="Constructors Info" parent="formula1.menu_constructors_main"/>
-    <menuitem id="menu_constructors_sub_1" name="Constructors" parent="formula1.menu_constructors_sub" action = "formula1.action_constructors"/>
+    <menuitem id="menu_constructors_sub_1" name="Constructors" parent="formula1.menu_constructors_sub"
+              action="formula1.action_constructors"/>
 
     <record id="view_driver_form" model="ir.ui.view">
         <field name="name">view.driver.form</field>
@@ -105,14 +189,21 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <header>
+                        <field name="d_state" widget="statusbar" statusbar_visible="d1,d2,d3,d4,d5" clickable="1"/>
+                    </header>
                     <group colspan="2" col="2">
                         <field name="d_no"/>
                         <field name="name"/>
                         <field name="salary"/>
+                        <field name="d_code"/>
                         <separator string="Test Driver"/>
                         <field name="test_driver"/>
                     </group>
                 </sheet>
+                <button name="write"
+                            string="Default Get button"
+                            type="object"/>
             </form>
         </field>
     </record>
@@ -124,6 +215,10 @@
                 <field name="name"/>
                 <field name="d_no"/>
                 <field name="salary"/>
+                <field name="d_code"/>
+                 <field name="d_state" widget="badge" decoration-success="d_state=='d1'" decoration-info="d_state=='d2'"
+                       decoration-danger="d_state=='d3'" decoration-warning="d_state=='d4'"
+                       decoration-primary="d_state=='d5'"/>
             </tree>
         </field>
     </record>
@@ -132,6 +227,8 @@
         <field name="name">Drivers</field>
         <field name="res_model">formula1.driver</field>
         <field name="view_mode">tree,form</field>
+        <!--        <field name="domain">[('name','like','a')]</field>-->
+        <field name="context">{'default_name':'Max Verstappen'}</field>
     </record>
 
     <menuitem id="menu_driver_main" name="Team Drivers" parent="formula1.menu_constructors_main"/>
@@ -172,6 +269,20 @@
             </tree>
         </field>
     </record>
+    <record id="view_fans_search" model="ir.ui.view">
+        <field name="name">Fans</field>
+        <field name="model">formula1.fans</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="fan_id"/>
+                <field name="fan_name"/>
+                <field name="constr"/>
+                <field name="fan_h"/>
+                <field name="fan_w"/>
+                <field name="fan_age"/>
+            </search>
+        </field>
+    </record>
 
     <record id="action_fans" model="ir.actions.act_window">
         <field name="name">Fans</field>
@@ -191,6 +302,7 @@
                     <group>
                         <field name="c_name"/>
                         <field name="const_cost"/>
+                        <field name="driver_id"/>
                     </group>
                 </sheet>
             </form>
@@ -205,6 +317,7 @@
             <tree>
                 <field name="c_name"/>
                 <field name="const_cost"/>
+                <field name="driver_id"/>
             </tree>
         </field>
     </record>
@@ -216,7 +329,8 @@
     </record>
 
     <menuitem id="menu_circuit_main" name='Circuits' parent="formula1.menu_constructors_main"/>
-    <menuitem id="menu_circuit_sub" name='Season Circuits' parent="formula1.menu_circuit_main" action="formula1.action_circuit"/>
+    <menuitem id="menu_circuit_sub" name='Season Circuits' parent="formula1.menu_circuit_main"
+              action="formula1.action_circuit"/>
 
     <record id="view_part_form" model="ir.ui.view">
         <field name="name">view.part.form</field>
@@ -251,5 +365,6 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="menu_part_main" name='Part Supplier' parent="formula1.menu_constructors_sub" action="formula1.action_part"/>
+    <menuitem id="menu_part_main" name='Part Supplier' parent="formula1.menu_constructors_sub"
+              action="formula1.action_part"/>
 </odoo>
