@@ -12,6 +12,9 @@
         'data/constr_sequence.xml',
         'views/constructors_view.xml',
     ],
+    'assets':{
+    'web.assets_backend':['formula1/static/src/scss/formula1.scss'],
+    },
     'installable': True,
     'auto_install': False,
     'application': True

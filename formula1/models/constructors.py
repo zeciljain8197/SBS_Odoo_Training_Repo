@@ -53,6 +53,8 @@ class Constructors(models.Model):
     html = fields.Html('Constructor Fanpage', help="Enter html!")
     st_date = fields.Datetime('Join Date', help="Enter Constructor start date!")
     nxt_date = fields.Date('Next Fanfest', default=cr_dt, help="Enter Constructor's next fanfest date'!")
+    test_str = fields.Datetime('Team testing session start')
+    test_end = fields.Datetime('Team testing session end')
     podiums = fields.Char('Podiums')
     wins = fields.Integer('No. of Wins')
     winner = fields.Boolean('Previous Wins')
@@ -60,7 +62,7 @@ class Constructors(models.Model):
     # Defining a selection field for drop down menu of various values to choose from! It will have a list of tuples
     engine = fields.Selection(
         selection=[('mercedes', 'Mercedes'), ('redbull', 'Redbull'), ('ferrari', 'Ferrari'),
-                   ('porsche', 'Porsche')],
+                   ('renault', 'Renault')],
         string='Engine supplier', help="Enter Constructor Engine supplier!")
     test_entry = fields.Char('TestEntry', size=4, default="F1")
     password = fields.Char('Password')
@@ -80,7 +82,8 @@ class Constructors(models.Model):
     # For M2M fields we will need comodel, relation(1stmodel_2ndmodel_rel), col1, col2, string as attr
     fav_ids = fields.Many2many(comodel_name="formula1.circuit", string='Fav Circuits')
     part_ids = fields.Many2many('formula1.part', 'formula1_part_formula1_constructors_rel', 'part_id', 'const_id',
-                                'Parts Supplier', domain=[('ps_name', 'ilike', '%Re')])
+                                'Parts Supplier')
+    # 'Parts Supplier', domain=[('ps_name', 'ilike', '%Re')])
 
     # Defining a M2O field for currency having comodel-res.currency, fetching all available currencies from that model
     currency_id = fields.Many2one('res.currency', 'currency')
@@ -123,6 +126,8 @@ class Constructors(models.Model):
     fan_count = fields.Integer('Fan count', compute='fan_ct')
 
     current_user = fields.Many2one('res.users', string='Current user')
+
+    clr = fields.Integer('Color Index')
 
     # Ques 24
     # @api.model_create_multi
@@ -307,8 +312,7 @@ class Constructors(models.Model):
         rec_updt = self.env['formula1.circuit']
         rec_updt_br = rec_updt.browse(2)
         up_rec = {
-            'c_name': 'Yas Marina Abu Dhabi GP',
-            'const_cost': 225000000
+            'const_cost': 1850000000
         }
         updt = rec_updt_br.write(up_rec)
 
@@ -363,31 +367,31 @@ class Constructors(models.Model):
         """
         self.current_user = self.env.user
 
-    # Ques1 and 3
-    @api.model_create_multi
-    def create(self, vals_list):
-        """
-        Overridden create() method to set the code from the name
-        --------------------------------------------------------
-        :param self: object / blank recordset
-        :param vals_list: A list of dictionary containing fields and values, used to create records
-        :return: A recordset of newly created records
-        """
-        d_obj = self.env['formula1.driver']
-        vals_lst = [{
-            'd_no': 10,
-            'name': 'Test Driver',
-            'salary': 1000000,
-            'd_code': 'DRI'
-        }]
-        d_obj.create(vals_lst)
-        res = super().create(vals_list)
-        print('Create method override', res)
-        rec = d_obj.browse(3)
-        rec.write({
-            'd_code': 'LEC'
-        })
-        return res
+    # # Ques1 and 3
+    # @api.model_create_multi
+    # def create(self, vals_list):
+    #     """
+    #     Overridden create() method to set the code from the name
+    #     --------------------------------------------------------
+    #     :param self: object / blank recordset
+    #     :param vals_list: A list of dictionary containing fields and values, used to create records
+    #     :return: A recordset of newly created records
+    #     """
+    #     d_obj = self.env['formula1.driver']
+    #     vals_lst = [{
+    #         'd_no': 10,
+    #         'name': 'Test Driver',
+    #         'salary': 1000000,
+    #         'd_code': 'DRI'
+    #     }]
+    #     d_obj.create(vals_lst)
+    #     res = super().create(vals_list)
+    #     print('Create method override', res)
+    #     rec = d_obj.browse(3)
+    #     rec.write({
+    #         'd_code': 'LEC'
+    #     })
+    #     return res
 
     # Ques25
     def create_sequence(self):
@@ -434,29 +438,35 @@ class Driver(models.Model):
 
     name = fields.Char('Driver Name', required=True, help="Enter the name of the team drivers!", copy=False)
     d_no = fields.Integer('Driver Number', required=True, help="Enter the driver number!")
-    salary = fields.Float('Salary', group_operator='avg')
-    test_driver = fields.One2many('formula1.constructors', 'driver_id', string='Simulations Driver')
+    salary = fields.Float('Salary')
+                          # group_operator = 'avg'
+    test_driver = fields.One2many('formula1.constructors', 'driver_id', string='Main Driver For')
     d_code = fields.Char('Driver Code', copy=False)
     d_state = fields.Selection(
         selection=[('d1', 'Legendary'), ('d2', 'Veteran'), ('d3', 'Title Competitor'), ('d4', 'Experienced'),
                    ('d5', 'Rookie')], string='Experience', copy=False)
+    d_nation = fields.Many2one('res.country', 'Nationality')
+    d_wins = fields.Integer('No of Wins')
+    d_podiums = fields.Integer('No of Podiums')
+    d_o_b = fields.Date('Date of Birth')
+    age = fields.Integer('Driver Age')
 
     # # Ques2
-    # @api.model_create_multi
-    # def create(self, vals_list):
-    #     """
-    #     Overridden create() method to set the code from the name
-    #     --------------------------------------------------------
-    #     :param self: object / blank recordset
-    #     :param vals_list: A list of dictionary containing fields and values, used to create records
-    #     :return: A recordset of newly created records
-    #     """
-    #     for vals in vals_list:
-    #         if not vals.get('d_code', False):
-    #             vals['d_code'] = vals.get('name').split()[1][:3].upper()
-    #     res = super().create(vals_list)
-    #     print('Create method override', res)
-    #     return res
+    @api.model_create_multi
+    def create(self, vals_list):
+        """
+        Overridden create() method to set the code from the name
+        --------------------------------------------------------
+        :param self: object / blank recordset
+        :param vals_list: A list of dictionary containing fields and values, used to create records
+        :return: A recordset of newly created records
+        """
+        for vals in vals_list:
+            if not vals.get('d_code', False):
+                vals['d_code'] = vals.get('name').split()[1][:3].upper()
+        res = super().create(vals_list)
+        print('Create method override', res)
+        return res
 
     # Ques4
     # def write(self, vals):

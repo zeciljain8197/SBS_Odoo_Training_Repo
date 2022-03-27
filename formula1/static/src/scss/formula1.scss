@@ -1,0 +1,33 @@
+.style_sheet {
+    font-family:Times New Roman;
+    font-size:15px;
+    font-weight:bold;
+    font-style:italic;
+    color:orange;
+}
+.img{
+    height:250px;
+    width:200px;
+}
+.float-container {
+    border: 0px solid #fff;
+    padding: 0px;
+    font-family:Times New Roman;
+    font-size:15px;
+}
+
+.float-child2 {
+    margin-top: 27px;
+    width: 50%;
+    float: left;
+}
+.float-child1 {
+    background-color: lightblue;
+    width: 50%;
+    float: left;
+    padding: 5px;
+}
+.font-clr{
+    font-weight:bold;
+    color:darkblue;
+}
