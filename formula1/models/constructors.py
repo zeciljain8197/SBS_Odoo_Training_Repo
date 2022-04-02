@@ -1,8 +1,6 @@
 from odoo import models, fields, api, exceptions
 from odoo.exceptions import ValidationError, UserError
 from datetime import datetime
-from lxml import etree
-
 # Importing the packages from odoo module
 
 # Creating a date value for using in the models
@@ -16,6 +14,7 @@ class Constructors(models.Model):
     _description = 'Constructors'
     _table = 'formula1_constructors'
     _order = 'sequence'
+    _inherit = ['mail.thread','mail.activity.mixin']
     # Defining parent_name and parent_path for hierarchy of this model
     _parent_name = 'parent_id'
     _parent_store = True
@@ -63,7 +62,8 @@ class Constructors(models.Model):
     engine = fields.Selection(
         selection=[('mercedes', 'Mercedes'), ('redbull', 'Redbull'), ('ferrari', 'Ferrari'),
                    ('renault', 'Renault')],
-        string='Engine supplier', help="Enter Constructor Engine supplier!")
+        string='Engine supplier', tracking=True, help="Enter Constructor Engine supplier!")
+    # Ex 6 Ques 16 above
     test_entry = fields.Char('TestEntry', size=4, default="F1")
     password = fields.Char('Password')
     email = fields.Char('Email')
@@ -439,7 +439,7 @@ class Driver(models.Model):
     name = fields.Char('Driver Name', required=True, help="Enter the name of the team drivers!", copy=False)
     d_no = fields.Integer('Driver Number', required=True, help="Enter the driver number!")
     salary = fields.Float('Salary')
-                          # group_operator = 'avg'
+    # group_operator = 'avg'
     test_driver = fields.One2many('formula1.constructors', 'driver_id', string='Main Driver For')
     d_code = fields.Char('Driver Code', copy=False)
     d_state = fields.Selection(
@@ -575,34 +575,8 @@ class Driver(models.Model):
     #     return res
 
     # Ques15
-    # @api.onchange('d_state')
-    # def onchange_state(self):
-    #     """
-    #     Onchange method to set salary based on driver experience
-    #     -------------------------------------------
-    #     :param self: object pointer
-    #     """
-    #     res = {}
-    #     for driver in self:
-    #         if driver.d_state == 'd1' or driver.d_state == 'd2':
-    #             driver.salary = 25000000.0
-    #         elif driver.d_state == 'd3' or driver.d_state == 'd4':
-    #             driver.salary = 12000000.0
-    #         elif driver.d_state == 'd5':
-    #             driver.salary = 4500000.0
-    #         else:
-    #             driver.salary = 0.0
-    #             return {
-    #                 'warning': {
-    #                     'title': 'Warning!',
-    #                     'message': 'Driver has invalid experience!'
-    #                 }
-    #             }
-    #         print('onchange working....')
-
-    # Ques 16 and 18
-    @api.onchange('salary', 'test_driver')
-    def onchange_multiple(self):
+    @api.onchange('d_state')
+    def onchange_state(self):
         """
         Onchange method to set salary based on driver experience
         -------------------------------------------
@@ -610,23 +584,49 @@ class Driver(models.Model):
         """
         res = {}
         for driver in self:
-            if driver.salary >= 50000000 and driver.test_driver:
-                driver.d_state = 'd5'
-            elif driver.salary >= 25000000 and driver.test_driver:
-                driver.d_state = 'd4'
-            elif driver.salary >= 15000000 and driver.test_driver:
-                driver.d_state = 'd3'
-            elif driver.salary >= 7500000 and driver.test_driver:
-                driver.d_state = 'd4'
-            elif driver.salary >= 2500000:
-                driver.d_state = 'd5'
+            if driver.d_state == 'd1' or driver.d_state == 'd2':
+                driver.salary = 25000000.0
+            elif driver.d_state == 'd3' or driver.d_state == 'd4':
+                driver.salary = 12000000.0
+            elif driver.d_state == 'd5':
+                driver.salary = 4500000.0
             else:
+                driver.salary = 0.0
                 return {
                     'warning': {
                         'title': 'Warning!',
-                        'message': 'Driver has no salary or Experience!'
+                        'message': 'Driver has invalid experience!'
                     }
                 }
+            print('onchange working....')
+
+    # Ques 16 and 18
+    # @api.onchange('salary', 'test_driver')
+    # def onchange_multiple(self):
+    #     """
+    #     Onchange method to set salary based on driver experience
+    #     -------------------------------------------
+    #     :param self: object pointer
+    #     """
+    #     res = {}
+    #     for driver in self:
+    #         if driver.salary >= 50000000 and driver.test_driver:
+    #             driver.d_state = 'd5'
+    #         elif driver.salary >= 25000000 and driver.test_driver:
+    #             driver.d_state = 'd4'
+    #         elif driver.salary >= 15000000 and driver.test_driver:
+    #             driver.d_state = 'd3'
+    #         elif driver.salary >= 7500000 and driver.test_driver:
+    #             driver.d_state = 'd4'
+    #         elif driver.salary >= 2500000:
+    #             driver.d_state = 'd5'
+    #         else:
+    #             return {
+    #                 'warning': {
+    #                     'title': 'Warning!',
+    #                     'message': 'Driver has no salary or Experience!'
+    #                 }
+    #             }
 
     # Ques11
     @api.model
@@ -722,3 +722,6 @@ class Part(models.Model):
 
     ps_id = fields.Integer('Parts Supplier ID')
     ps_name = fields.Char('Parts Supplier', size=64, help='Enter the various parts supplier for this constructor!')
+
+
+

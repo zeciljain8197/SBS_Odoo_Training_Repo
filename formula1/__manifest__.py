@@ -3,7 +3,7 @@
     'description': '''This modules is used to manage Formula 1 fans portal.''',
     'version': '1.0',
     'category': 'formula1',
-    'depends': ['base'],
+    'depends': ['base','mail'],
     'author': 'Zecil Jain',
     'website': 'https://www.formula1.com/',
     'data': [

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_academy_form_inherit_fields" model="ir.ui.view">
+        <field name="name">view.academy.form.inherit_fields</field>
+        <field name="model">formula1.constructors</field>
+        <field name="inherit_id" ref="formula1.view_constructors_form"/>
+        <field name="arch" type="xml">
+            <!--    Ex 6 Ques 2-->
+            <xpath expr="/form/sheet/group/field[@name='sign_in']" position="replace">
+                <field name="a_exist"/>
+            </xpath>
+            <xpath expr="/form/sheet/group/field[@name='email']" position="before">
+                <field name="a_no"/>
+            </xpath>
+            <xpath expr="/form/sheet/group/field[@name='priority']" position="after">
+                <field name="awards"/>
+            </xpath>
+            <xpath expr="/form/sheet/notebook" position="inside">
+                <page name="pg_academy_notes" string="Academies">
+                    <field name="extra_teams_ids"/>
+                </page>
+                <page name="pg_extra_notes" string="Academy Notes">
+                    <field name="a_notes"/>
+                </page>
+            </xpath>
+            <!--    Ex 6 Ques 3-->
+            <xpath expr="//field[@name='wins']" position="attributes">
+                <attribute name="attrs">{'invisible':[('winner','=',False)]}</attribute>
+            </xpath>
+
+            <!--Ex 6 Ques 21-->
+            <xpath expr="//field[@name='podiums']" position="attributes">
+                <attribute name="groups">formula1.grp_formula1_team_p</attribute>
+            </xpath>
+            <xpath expr="//button[@name='cur_user']" position="attributes">
+                <attribute name="groups">formula1.grp_formula1_team_p</attribute>
+            </xpath>
+            <xpath expr="//page[@name='pg_driver2_notes']" position="attributes">
+                <attribute name="groups">formula1.grp_formula1_team_p</attribute>
+            </xpath>
+
+            <!--Ex 6 Ques 23-->
+            <xpath expr="//field[@name='current_user']" position="attributes">
+                <attribute name="groups">formula1.grp_formula1_driver,formula1.grp_formula1_team_p</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Ex 6 Ques 18-->
+    <record id="view_constructors_activity" model="ir.ui.view">
+        <field name="name">view.constructors.activity</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <activity string="Constructors">
+                <field name="id"/>
+                <templates>
+                    <div t-name="activity-box">
+                        <img t-att-src="activity_image('formula1.constructors', 'img', record.id.raw_value)" role="img" t-att-title="record.id.value" t-att-alt="record.id.value"/>
+                        <field name="name"/>
+                    </div>
+                </templates>
+            </activity>
+        </field>
+    </record>
+
+    <record id="formula1.action_constructors" model="ir.actions.act_window">
+        <field name="view_mode">kanban,calendar,tree,form,graph,pivot,activity</field>
+    </record>
+
+    <!--Ex 6 Ques 22-->
+    <menuitem id="formula1.menu_constructors_renault"
+          action="formula1.action_constructors_renault"
+          parent="formula1.menu_constructors_sub"
+          name="Renault Supplied Constructors"
+          groups="-formula1.grp_formula1_team_p"/>
+
+    <record id="view_teams_form" model="ir.ui.view">
+        <field name="name">view.teams.form</field>
+        <field name="model">formula1.extras.teams</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="a_name"/>
+                        <field name="a_series"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_teams_tree" model="ir.ui.view">
+        <field name="name">view.teams.tree</field>
+        <field name="model">formula1.extras.teams</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="a_name"/>
+                <field name="a_series"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_teams" model="ir.actions.act_window">
+        <field name="name">Academy Teams</field>
+        <field name="res_model">formula1.extras.teams</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_teams_main" name='Academy Teams' parent="formula1.menu_constructors_sub"
+              action="formula1_extras.action_teams"/>
+
+    <record id="view_driver_form_inherit_fields" model="ir.ui.view">
+        <field name="name">view.driver.form.inherit_fields</field>
+        <field name="model">formula1.driver</field>
+        <field name="inherit_id" ref="formula1.view_driver_form"/>
+        <field name="arch" type="xml">
+            <!--    Ex 6 Ques 8-->
+            <xpath expr="/form" position="inside">
+                <button name="button_for_state"
+                        string="State"
+                        type="object"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Ex 6 Ques 19, 20-->
+    <record id="formula1.action_driver" model="ir.actions.act_window">
+        <field name="name">Drivers</field>
+        <field name="res_model">formula1.driver</field>
+        <field name="view_mode">tree,form,graph,pivot</field>
+        <field name="domain">[('name','like','a')]</field>
+        <field name="context">{'default_name':'Charles Leclerc'}</field>
+    </record>
+
+</odoo>

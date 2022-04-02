@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_template_form" model="ir.ui.view">
+        <field name="name">view.template.form</field>
+        <field name="model">extra.circuit</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="extcir_name"/>
+                    <field name="main_cost"/>
+                    <field name="circuit_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="view_template_tree" model="ir.ui.view">
+        <field name="name">view.template.tree</field>
+        <field name="model">extra.circuit</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="extcir_name"/>
+                <field name="main_cost"/>
+                <field name="circuit_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_template" model="ir.actions.act_window">
+        <field name="name">Extra Circuit</field>
+        <field name="res_model">extra.circuit</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_extra_circuits" name="Test Circuits" action="action_template"
+              parent="formula1.menu_circuit_main"/>
+
+    <record id="view_extra_part_form" model="ir.ui.view">
+        <field name="name">view.extra.part.form</field>
+        <field name="model">extra.part</field>
+        <field name="arch" type="xml">
+            <form>
+                <group colspan="4" col="4">
+                    <field name="p_name"/>
+                    <field name="part_id"/>
+                    <field name="costly"/>
+                    <field name="efficient"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="view_extra_part_tree" model="ir.ui.view">
+        <field name="name">view.extra.part.tree</field>
+        <field name="model">extra.part</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="p_name"/>
+                <field name="part_id"/>
+                <field name="costly"/>
+                <field name="efficient"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_extra_parts" model="ir.actions.act_window">
+        <field name="name">Extra Parts</field>
+        <field name="res_model">extra.part</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_extra_part" name="Substitute Part Suppliers" action="action_extra_parts"
+              parent="formula1.menu_constructors_sub"/>
+</odoo>
