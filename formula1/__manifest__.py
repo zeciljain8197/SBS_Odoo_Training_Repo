@@ -10,6 +10,12 @@
         'security/formula1_security.xml',
         'security/ir.model.access.csv',
         'data/constr_sequence.xml',
+        'views/update_fans_alt_view.xml',
+        'views/update_fans_view.xml',
+        'views/update_circuit_cost_view.xml',
+        'views/update_entry_fees_view.xml',
+        'views/update_driver_wins_view.xml',
+        'views/update_driver_wins_inherit_view.xml',
         'views/constructors_view.xml',
     ],
     'assets':{

@@ -19,6 +19,12 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <button name="%(action_entry_fees_wiz2)d"
+                            type="action"
+                            string="Update Fees"/>
+                    <button name="%(action_fans_wiz)d"
+                            type="action"
+                            string="Update Fans"/>
                     <field name="state" widget="statusbar" statusbar_visible="s1,s2,s3,s4,s5" clickable="1"/>
                 </header>
                 <sheet>
@@ -39,6 +45,13 @@
                                 icon="fa-meh-o"
                                 context="{'search_default_constr':active_id}">
                             <field name="fan_count" widget="statinfo"/>
+                        </button>
+                        <button name="academy_ct"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-exchange"
+                                context="{'search_default_main_team':active_id}">
+                            <field name="team_count" widget="statinfo"/>
                         </button>
                     </div>
                     <widget name="web_ribbon" title="Title Contender" bg_color="bg-warning"
@@ -75,38 +88,38 @@
                         <field name="priority" widget="priority"/>
                         <!--    Ex 5 Ques 36-->
                         <field name="driver_id"/>
-<!--                        Internal views are only applicable to O2M fields-->
-<!--                            <form>-->
-<!--                                <header>-->
-<!--                                    <field name="d_state" widget="statusbar" statusbar_visible="d1,d2,d3,d4,d5"-->
-<!--                                           clickable="1"/>-->
-<!--                                </header>-->
-<!--                                <sheet>-->
-<!--                                    <widget name="web_ribbon" title="Legendary Driver" bg_color="bg-success"-->
-<!--                                            attrs="{'invisible': [('d_state', '!=', 'd1')]}"/>-->
-<!--                                    <widget name="web_ribbon" title="Veteran Driver" bg_color="bg-warning"-->
-<!--                                            attrs="{'invisible': [('d_state', '!=', 'd2')]}"/>-->
-<!--                                    <group colspan="4" col="4">-->
-<!--                                        <field name="d_no"/>-->
-<!--                                        <field name="name"/>-->
-<!--                                        <field name="salary"/>-->
-<!--                                        <field name="d_code"/>-->
-<!--                                        <field name="d_o_b"/>-->
-<!--                                        <field name="age"/>-->
-<!--                                        <field name="d_nation"/>-->
-<!--                                    </group>-->
-<!--                                </sheet>-->
-<!--                            </form>-->
+                        <!--                        Internal views are only applicable to O2M fields-->
+                        <!--                            <form>-->
+                        <!--                                <header>-->
+                        <!--                                    <field name="d_state" widget="statusbar" statusbar_visible="d1,d2,d3,d4,d5"-->
+                        <!--                                           clickable="1"/>-->
+                        <!--                                </header>-->
+                        <!--                                <sheet>-->
+                        <!--                                    <widget name="web_ribbon" title="Legendary Driver" bg_color="bg-success"-->
+                        <!--                                            attrs="{'invisible': [('d_state', '!=', 'd1')]}"/>-->
+                        <!--                                    <widget name="web_ribbon" title="Veteran Driver" bg_color="bg-warning"-->
+                        <!--                                            attrs="{'invisible': [('d_state', '!=', 'd2')]}"/>-->
+                        <!--                                    <group colspan="4" col="4">-->
+                        <!--                                        <field name="d_no"/>-->
+                        <!--                                        <field name="name"/>-->
+                        <!--                                        <field name="salary"/>-->
+                        <!--                                        <field name="d_code"/>-->
+                        <!--                                        <field name="d_o_b"/>-->
+                        <!--                                        <field name="age"/>-->
+                        <!--                                        <field name="d_nation"/>-->
+                        <!--                                    </group>-->
+                        <!--                                </sheet>-->
+                        <!--                            </form>-->
 
-<!--                            <tree>-->
-<!--                                <field name="name"/>-->
-<!--                                <field name="d_no"/>-->
-<!--                                <field name="salary" avg="Average Salary"/>-->
-<!--                                <field name="d_code" optional="show"/>-->
-<!--                                <field name="age" optional="show"/>-->
-<!--                                <field name="d_wins" optional="show"/>-->
-<!--                            </tree>-->
-<!--                        </field>-->
+                        <!--                            <tree>-->
+                        <!--                                <field name="name"/>-->
+                        <!--                                <field name="d_no"/>-->
+                        <!--                                <field name="salary" avg="Average Salary"/>-->
+                        <!--                                <field name="d_code" optional="show"/>-->
+                        <!--                                <field name="age" optional="show"/>-->
+                        <!--                                <field name="d_wins" optional="show"/>-->
+                        <!--                            </tree>-->
+                        <!--                        </field>-->
                         <field name="extra_info"/>
                         <field name="docu" filename="file_name"/>
                         <field name="t_1"/>
@@ -455,6 +468,12 @@
                                     <a role="menuitem" type="object" name="update_rec" class="dropdown-item">Update
                                         Circuit Record
                                     </a>
+                                    <!--Ex 7 Ques 10-->
+                                    <div role="separator" class="dropdown-divider"/>
+                                    <a role="menuitem" type="action" name="%(formula1.action_entry_fees_wiz)d"
+                                       class="dropdown-item">
+                                        Update Entry Fees
+                                    </a>
                                     <!--    Ex 5 Ques 29-->
                                     <div role="separator" class="dropdown-divider"/>
                                     <ul class="oe_kanban_colorpicker" data-field="clr"/>
@@ -574,6 +593,10 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <button name="%(action_update_driver_wins)d" type="action" string="Update Wins"
+                            context="{'default_d_id':active_id}"/>
+                    <!--Ex 7 Ques 7-->
+                    <button name="update_driver_wins_2" type="object" string="Update Wins Alt"/>
                     <field name="d_state" widget="statusbar" statusbar_visible="d1,d2,d3,d4,d5" clickable="1"/>
                 </header>
                 <sheet>
@@ -594,8 +617,8 @@
                         <field name="d_wins"/>
                         <field name="d_podiums"/>
                     </group>
-<!--                    <separator string="Test Driver"/>-->
-<!--                    <field name="test_driver"/>-->
+                    <!--                    <separator string="Test Driver"/>-->
+                    <!--                    <field name="test_driver"/>-->
                 </sheet>
                 <button name="write"
                         string="Default Get button"

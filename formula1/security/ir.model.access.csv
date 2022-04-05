@@ -4,6 +4,11 @@ access_constructors_team_p,access.constructors.team_p,model_formula1_constructor
 access_constructors_driver,access.constructors.driver,model_formula1_constructors,grp_formula1_driver,1,1,0,0
 access_driver_team_p, access.driver.team_p,model_formula1_driver,grp_formula1_team_p,1,1,1,1
 access_driver_driver,access.driver.driver,model_formula1_driver,grp_formula1_driver,1,1,0,0
-access_fans_driver,access.fans.driver,model_formula1_fans,grp_formula1_driver,1,1,1,0
+access_fans_driver,access.fans.driver,model_formula1_fans,grp_formula1_driver,1,1,1,1
 access_circuit_owner,access.circuit.owner,model_formula1_circuit,grp_formula1_owner,1,1,1,1
 access_part_owner,access.part.owner,model_formula1_part,grp_formula1_owner,1,1,1,1
+access_update_entry_fees_owner,access.update.entry.fees.owner,model_update_entry_fees,grp_formula1_owner,1,1,1,1
+access_update_fans_owner,access.update.fans.owner,model_update_fans,grp_formula1_owner,1,1,1,1
+access_update_circuit_cost_owner,access.update.circuit.cost.owner,model_update_circuit_cost,grp_formula1_owner,1,1,1,1
+access_update_driver_wins_owner,access.update.driver.wins.owner,model_update_driver_wins,grp_formula1_owner,1,1,1,1
+access_update_fans_alt_owner,access.update.fans.alt.owner,model_update_fans_alt,grp_formula1_owner,1,1,1,1

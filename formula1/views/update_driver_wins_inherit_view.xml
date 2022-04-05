@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--Ex 7 Ques 11-->
+    <!--Ex 7 Ques 12-->
+    <record id="view_driver_wins_form_inherit" model="ir.ui.view">
+        <field name="name">view.driver.wins.form.inherit</field>
+        <field name="model">update.driver.wins</field>
+        <field name="inherit_id" ref="formula1.view_update_driver_wins_wiz_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form/group/field[@name='d_wins']" position="after">
+                <field name="d_podiums"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

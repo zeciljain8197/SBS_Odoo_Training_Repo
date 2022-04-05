@@ -1,6 +1,7 @@
 from odoo import models, fields, api, exceptions
 from odoo.exceptions import ValidationError, UserError
 from datetime import datetime
+
 # Importing the packages from odoo module
 
 # Creating a date value for using in the models
@@ -14,7 +15,7 @@ class Constructors(models.Model):
     _description = 'Constructors'
     _table = 'formula1_constructors'
     _order = 'sequence'
-    _inherit = ['mail.thread','mail.activity.mixin']
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     # Defining parent_name and parent_path for hierarchy of this model
     _parent_name = 'parent_id'
     _parent_store = True
@@ -128,6 +129,20 @@ class Constructors(models.Model):
     current_user = fields.Many2one('res.users', string='Current user')
 
     clr = fields.Integer('Color Index')
+
+    team_count = fields.Integer('Academy Team count', compute='academy_ct')
+
+    # Ex 7 Ques 8
+    def academy_ct(self):
+        """
+        This method is used to count related academies of the current record
+        @param self: object pointer/ Recordset
+        """
+        rec = self.env['formula1.extras.teams']
+        for team in self:
+            team.team_count = rec.search_count([('main_team', '=', team.id)])
+        action = self.env.ref('formula1_extras.action_teams_wiz').read()[0]
+        return action
 
     # Ques 24
     # @api.model_create_multi
@@ -451,6 +466,16 @@ class Driver(models.Model):
     d_o_b = fields.Date('Date of Birth')
     age = fields.Integer('Driver Age')
 
+    # Ex 7 Ques 7
+    def update_driver_wins_2(self):
+        """
+        This method is used to Update driver wins by directly calling the action
+        -----------------------------------------------------------------------
+        :param self: object pointer
+        """
+        action = self.env.ref('formula1.action_update_driver_wins').read()[0]
+        return action
+
     # # Ques2
     @api.model_create_multi
     def create(self, vals_list):
@@ -722,6 +747,3 @@ class Part(models.Model):
 
     ps_id = fields.Integer('Parts Supplier ID')
     ps_name = fields.Char('Parts Supplier', size=64, help='Enter the various parts supplier for this constructor!')
-
-
-

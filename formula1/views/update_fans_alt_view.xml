@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_update_fans_alt_form_inherit" model="ir.ui.view">
+        <field name="name">view.update.fans.alt.form.inherit</field>
+        <field name="model">formula1.constructors</field>
+        <field name="inherit_id" ref="formula1.view_constructors_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form/header/button[@name='%(action_fans_wiz)d']" position="after">
+                <button name="%(action_update_fans_alt)d"
+                        type="action"
+                        string="Update Fans Alt"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_update_fans_alt_wiz" model="ir.ui.view">
+        <field name="name">view.update.fans.alt.wiz</field>
+        <field name="model">update.fans.alt</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="c_id"/>
+                    <field name="f_ids"/>
+                </group>
+                <footer>
+                    <button name="update_fans_alt" type="object" class="btn-primary" string="Update Fan Alt"/>
+                    <button special="cancel" string="Close" class="btn-danger"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_update_fans_alt" model="ir.actions.act_window">
+        <field name="name">Update Fans Alt</field>
+        <field name="res_model">update.fans.alt</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'form_view_ref':'formula1.view_update_fans_alt_wiz'}</field>
+    </record>
+</odoo>

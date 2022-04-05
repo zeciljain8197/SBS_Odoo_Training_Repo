@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_update_entry_fees_wiz_form" model="ir.ui.view">
+        <field name="name">view.update.entry.fees.wiz.form</field>
+        <field name="model">update.entry.fees</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="const_id" required="1"/>
+                    <field name="entry_fees_new"/>
+                </group>
+                <footer>
+                    <!--Ex 7 Ques 5-->
+                    <button name="%(action_circuit_cost)d" type="action" class="btn-success" string="Update Circuit Cost"/>
+                    <button name="update_rec" type="object" class="btn-primary" string="Update Fees"/>
+                    <button special="cancel" string="Close" class="btn-danger"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_entry_fees_wiz" model="ir.actions.act_window">
+        <field name="name">Update Entry Fees</field>
+        <field name="res_model">update.entry.fees</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'form_view_ref':'formula1.view_update_entry_fees_wiz_form'}</field>
+    </record>
+
+    <menuitem id="menu_wiz_main" name="Operations" parent="menu_constructors_main"/>
+    <menuitem id="menu_fees_wiz" name="Update Entry Fees" action="action_entry_fees_wiz" parent="menu_wiz_main"/>
+
+    <!--Ex 7 Ques 2-->
+    <record id="view_update_entry_fees_wiz2_form" model="ir.ui.view">
+        <field name="name">view.update.entry.fees.wiz2.form</field>
+        <field name="model">update.entry.fees</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="entry_fees_new"/>
+                </group>
+                <footer>
+                    <button name="update_rec" type="object" class="btn-primary" string="Update Fees"/>
+                    <button special="cancel" string="Close" class="btn-danger"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!--Ex 7 Ques 3-->
+    <record id="action_entry_fees_wiz2" model="ir.actions.act_window">
+        <field name="name">New Entry Fees</field>
+        <field name="res_model">update.entry.fees</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="formula1.model_formula1_constructors"/>
+        <field name="binding_view_types"/>
+        <field name="context">{'form_view_ref':'formula1.view_update_entry_fees_wiz2_form'}</field>
+    </record>
+</odoo>
+
+
