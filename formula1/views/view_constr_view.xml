@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_view_constr_form_wiz" model="ir.ui.view">
+        <field name="name">view.view.constr.form.wiz</field>
+        <field name="model">view.constr</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="driver_id"/>
+                </group>
+                <footer>
+                    <button name="view_constr" type="object" class="btn-primary" string="View Constructors"/>
+                    <button special="cancel" string="Close" class="btn-danger"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_view_constr" model="ir.actions.act_window">
+        <field name="name">View Driver Constructor</field>
+        <field name="res_model">view.constr</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

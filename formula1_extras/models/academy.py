@@ -49,6 +49,7 @@ class AcademyTeams(models.Model):
     _rec_name = "a_name"
 
     a_name = fields.Char('Academy Team Name', required=True)
+    main_team = fields.Many2one('formula1.constructors', string='Academy Team Of')
     a_series = fields.Selection(
         selection=[('f2', 'Formula2'), ('f3', 'Formula3'), ('ic', 'IndyCar'), ('fE', 'FormulaE')],
         string="Team Competing In")
@@ -79,3 +80,18 @@ class Driver(models.Model):
         for driver in self:
             if driver.d_state == 'd5':
                 driver.d_wins = 0
+
+    class AcademyDriver(models.Model):
+        _name = 'academy.driver'
+        _inherit = 'formula1.driver'
+        _description = 'Academy Drivers'
+
+        junior_for = fields.Many2one('formula1.constructors', 'Member of Junior Team for Constructor')
+        reserve = fields.Boolean('Reserve Driver for any F1 Constructor')
+        const_name = fields.Many2one('formula1.constructors', 'Reserve for Constructor')
+        driving_in = fields.Selection(
+            selection=[('f2', 'Formula2'), ('f3', 'Formula3'), ('ic', 'IndyCar'), ('fE', 'FormulaE')])
+        driving_for = fields.Many2one('formula1.extras.teams')
+        d_state = fields.Selection(
+            selection=[('d1', 'Legendary'), ('d2', 'Veteran'), ('d3', 'Title Competitor'), ('d4', 'Experienced'),
+                       ('d5', 'Rookie'), ('d6', 'Academy Driver')], string='Experience', copy=False)

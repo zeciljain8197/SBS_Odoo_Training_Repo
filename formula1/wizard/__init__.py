@@ -4,3 +4,7 @@ from . import update_circuit_cost
 from . import update_driver_wins
 from . import update_fans_alt
 from . import update_driver_wins_inherit
+from . import view_constr
+from . import constructor_report_wiz
+from . import overall_report_wiz
+from . import constructor_xls_wiz

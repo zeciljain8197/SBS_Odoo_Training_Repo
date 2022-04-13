@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_constructor" inherit_id="formula1.report_constructor">
+        <xpath expr="//span[@t-esc='zinu']" position="after">
+            <br/>
+            Email ID: <span t-field="o.email"/>
+            <br/>
+            Entry Fees: <span t-field="o.entry_fees"/>
+            <br/>
+            Nationality: <span t-esc="Nationality"/>
+            <br/>
+            Age: <span t-esc="Age"/>
+            <br/>
+        </xpath>
+        <xpath expr="//p[@t-esc='get_total_fan_desc_1(o.fan_ids)']" position="after">
+            <br/>
+             <div class="col-auto col-3 mw-100 mb-2" name="Fans">
+                <strong>Fans</strong>
+                <p class="m-0" t-esc="fetch_fans(o.fan_ids)"/>
+            </div>
+            <br/>
+            <div class="col-auto col-3 mw-100 mb-2" name="Fandom">
+                <strong>Fandom %</strong>
+                <p class="m-0" t-esc="get_total_fandom(o.fan_ids)"/>
+            </div>
+            <br/>
+        </xpath>
+    </template>
+
+</odoo>

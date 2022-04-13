@@ -11,7 +11,7 @@ class UpdateDriverWins(models.TransientModel):
     def update_driver_wins(self):
         """"
         This method is used to update driver wins
-        ------------------------------------------
+        -----------------------------------------
         :param self: object pointer
         """
         d_win = self.d_id

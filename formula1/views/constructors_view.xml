@@ -21,10 +21,24 @@
                 <header>
                     <button name="%(action_entry_fees_wiz2)d"
                             type="action"
-                            string="Update Fees"/>
+                            string="Update Fees"
+                            class="button2 button2:hover"/>
                     <button name="%(action_fans_wiz)d"
                             type="action"
-                            string="Update Fans"/>
+                            string="Update Fans"
+                            class="button2 button2:hover"/>
+                    <button name="%(action_view_constr)d"
+                            type="action"
+                            string="View Constructors"
+                            class="button2 button2:hover"/>
+                    <button name="%(action_constructor_report_wiz_simple)d"
+                            type="action"
+                            string="Report Wizard"
+                            class="button2 button2:hover"/>
+                    <button name="%(action_overall_report_wiz)d"
+                            type="action"
+                            string="Overall Report Wizard"
+                            class="button2 button2:hover"/>
                     <field name="state" widget="statusbar" statusbar_visible="s1,s2,s3,s4,s5" clickable="1"/>
                 </header>
                 <sheet>
@@ -32,7 +46,7 @@
                         <button name="%(action_constructors)d"
                                 string="Open records"
                                 type="action"
-                                class="oe_stat_button"
+                                class="oe_stat_button "
                                 icon="fa-exchange"/>
                         <button name="cur_user"
                                 string="Current User"
@@ -49,7 +63,7 @@
                         <button name="academy_ct"
                                 type="object"
                                 class="oe_stat_button"
-                                icon="fa-exchange"
+                                icon="fa-cogs"
                                 context="{'search_default_main_team':active_id}">
                             <field name="team_count" widget="statinfo"/>
                         </button>
@@ -135,8 +149,12 @@
                         <field name="test_str"/>
                         <field name="test_end"/>
                     </group>
+                </sheet>
+                <sheet>
                     <separator string="Notes" class="sheet-color"/>
                     <field name="const_notes"/>
+                </sheet>
+                <sheet>
                     <notebook class="sheet-color">
                         <page name="pg_driver1_notes" string="Driver1 Notes">
                             <field name="driver1_notes"/>
@@ -206,25 +224,30 @@
                         <field name="message_ids"/>
                     </div>
                 </sheet>
-                <footer>
+                <footer style="text-align:center">
                     <button name="new_record"
                             string="Driver"
                             type="object"
-                            icon="fa-user"/>
+                            icon="fa-user"
+                            class="button button:hover"/>
                     <button name="update_rec"
                             string="Circuits"
                             type="object"
-                            icon="fa-exchange"/>
+                            icon="fa-exchange"
+                            class="button button:hover"/>
                     <button name="link_ids"
                             string="Link Circuits"
                             type="object"
-                            icon="fa-pencil-square-o"/>
+                            icon="fa-pencil-square-o"
+                            class="button button:hover"/>
                     <button name="button_for_env"
                             string="Env Results"
-                            type="object"/>
+                            type="object"
+                            class="button button:hover"/>
                     <button name="create_sequence"
                             string="Sequence"
-                            type="object"/>
+                            type="object"
+                            class="button button:hover"/>
                 </footer>
             </form>
         </field>
@@ -317,6 +340,57 @@
             </tree>
         </field>
     </record>
+    <record id="view_constructors_tree_max" model="ir.ui.view">
+        <field name="name">view.constructors.tree.max</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state=='s1'" decoration-info="state=='s2'" decoration-warning="state=='s3'"
+                  decoration-primary="state=='s4'" decoration-muted="state=='s5'" decoration-danger="active==False"
+                  multi_edit="1">
+                <field name="sequence" widget="handle"/>
+                <field name="active"/>
+                <field name="const_id"/>
+                <field name="c_code"/>
+                <field name="name"/>
+                <field name="engine"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_constructors_tree_charles" model="ir.ui.view">
+        <field name="name">view.constructors.tree.charles</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state=='s1'" decoration-info="state=='s2'" decoration-warning="state=='s3'"
+                  decoration-primary="state=='s4'" decoration-muted="state=='s5'" decoration-danger="active==False"
+                  multi_edit="1">
+                <field name="sequence" widget="handle"/>
+                <field name="active"/>
+                <field name="const_id"/>
+                <field name="c_code"/>
+                <field name="name"/>
+                <field name="engine"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_constructors_tree_jehan" model="ir.ui.view">
+        <field name="name">view.constructors.tree.jehan</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state=='s1'" decoration-info="state=='s2'" decoration-warning="state=='s3'"
+                  decoration-primary="state=='s4'" decoration-muted="state=='s5'" decoration-danger="active==False"
+                  multi_edit="1">
+                <field name="sequence" widget="handle"/>
+                <field name="active"/>
+                <field name="const_id"/>
+                <field name="c_code"/>
+                <field name="name"/>
+                <field name="engine"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
 
     <record id="view_constructors_search" model="ir.ui.view">
         <field name="name">Constructors</field>
@@ -332,7 +406,7 @@
                 <filter name="fil_red" string="redbull" domain="[('engine','=','redbull')]"/>
                 <filter name="fil_mer" string="mercedes" domain="[('engine','=','mercedes')]"/>
                 <filter name="fil_fer" string="ferrari" domain="[('engine','=','ferrari')]"/>
-                <filter name="fil_por" string="porsche" domain="[('engine','=','porsche')]"/>
+                <filter name="fil_ren" string="renault" domain="[('engine','=','renault')]"/>
                 <!--                Ex 5 Ques 1:-->
                 <filter name="fil_jd" string="Join Date" date="st_date"/>
                 <filter name="grp_by_date" string="Date" context="{'group_by':'st_date'}"/>
@@ -417,10 +491,13 @@
         <field name="name">view.constructors.kanban</field>
         <field name="model">formula1.constructors</field>
         <field name="arch" type="xml">
-            <kanban>
+            <kanban default_group_by="engine">
                 <!--We need to add the color field in kanban view before template to enable usage of various colors
                 which will be fetched from that fields values.-->
                 <field name="clr"/>
+                <field name="state"/>
+                <progressbar field="state"
+                             colors='{"s1": "info", "s2": "warning", "s3":"primary","s4":"danger","s5":"success"}'/>
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="#{!selection_mode ? kanban_color(record.clr.raw_value) : ''} oe_kanban_card oe_kanban_global_click">
@@ -573,6 +650,31 @@
         <field name="context">{'graph_view_ref':'formula1.view_constructors_graph_alt','default_engine':'renault'}
         </field>
     </record>
+    <record id="action_constructors_max" model="ir.actions.act_window">
+        <field name="name">Max</field>
+        <field name="res_model">formula1.constructors</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[('driver_id','=',1)]</field>
+        <field name="context">{'tree_view_ref':'formula1.view_constructors_tree_max','default_driver_id':'1'}
+        </field>
+    </record>
+    <record id="action_constructors_charles" model="ir.actions.act_window">
+        <field name="name">Max</field>
+        <field name="res_model">formula1.constructors</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[('driver_id','=',2)]</field>
+        <field name="context">{'tree_view_ref':'formula1.view_constructors_tree_charles','default_driver_id':'2'}
+        </field>
+    </record>
+    <record id="action_constructors_jehan" model="ir.actions.act_window">
+        <field name="name">Max</field>
+        <field name="res_model">formula1.constructors</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[('driver_id','=',3)]</field>
+        <field name="context">{'tree_view_ref':'formula1.view_constructors_tree_jehan','default_driver_id':'3'}
+        </field>
+    </record>
+
 
     <menuitem id="menu_constructors_main" name="Formula1 Fan Management"/>
     <menuitem id="menu_constructors_sub" name="Constructors Info" parent="formula1.menu_constructors_main"/>
@@ -606,11 +708,14 @@
                     <!--                    Ex 5 Ques 13-->
                     <widget name="web_ribbon" title="Veteran Driver" bg_color="bg-warning"
                             attrs="{'invisible': [('d_state', '!=', 'd2')]}"/>
+                    <field name="img" widget="image" class="img"/>
                     <group colspan="4" col="4">
+                        <field name="clr" widget="color_picker"/>
                         <field name="d_no"/>
                         <field name="name"/>
                         <field name="salary"/>
                         <field name="d_code"/>
+                        <field name="fan_id"/>
                         <field name="d_o_b"/>
                         <field name="age"/>
                         <field name="d_nation"/>
@@ -618,7 +723,6 @@
                         <field name="d_podiums"/>
                     </group>
                     <!--                    <separator string="Test Driver"/>-->
-                    <!--                    <field name="test_driver"/>-->
                 </sheet>
                 <button name="write"
                         string="Default Get button"
@@ -679,16 +783,79 @@
         </field>
     </record>
 
+    <record id="view_driver_kanban" model="ir.ui.view">
+        <field name="name">view.driver.kanban</field>
+        <field name="model">formula1.driver</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="d_state">
+                <field name="d_no"/>
+                <field name="name"/>
+                <field name="salary"/>
+                <field name="d_code"/>
+                <field name="d_o_b"/>
+                <field name="age"/>
+                <field name="d_nation"/>
+                <field name="d_wins"/>
+                <field name="d_podiums"/>
+                <field name="img"/>
+                <field name="clr"/>
+                <progressbar field="d_state"
+                             colors='{"d1": "info", "d2": "warning", "d3":"primary","d4":"danger","d5":"success"}'/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{!selection_mode ? kanban_color(record.clr.raw_value) : ''} oe_kanban_card oe_kanban_global_click">
+                            <div class="float-container">
+                                <div class="float-child1">
+                                    <h2>
+                                        <field name="name"/>
+                                    </h2>
+                                    <div class="font-clr">
+                                        <field name="d_code"/>
+                                    </div>
+                                    <br/>
+                                    <field name="salary"/>
+                                    <br/>
+                                    <field name="d_nation"/>
+                                </div>
+                                <div class="float-child2">
+                                    <field name="img" widget="image" class="img"/>
+                                </div>
+                            </div>
+                            <div class="o_dropdown_kanban o_dropdown">
+                                <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown"
+                                   data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                    <span class="fa fa-ellipsis-v"/>
+                                </a>
+                                <div class="dropdown-menu" role="menu">
+                                    <a role="menuitem" type="open" class="dropdown-item">Open</a>
+                                    <t t-if="widget.editable">
+                                        <a role="menuitem" type="edit" class="dropdown-item">Edit</a>
+                                    </t>
+                                    <t t-if="widget.deletable">
+                                        <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                    </t>
+                                    <div role="separator" class="dropdown-divider"/>
+                                    <ul class="oe_kanban_colorpicker" data-field="clr"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <record id="action_driver" model="ir.actions.act_window">
         <field name="name">Drivers</field>
         <field name="res_model">formula1.driver</field>
         <field name="view_mode">tree,form,graph,pivot</field>
-        <field name="domain">[('name','like','a')]</field>
+        <!--        <field name="domain">[('name','like','a')]</field>-->
         <field name="context">{'default_name':'Max Verstappen'}</field>
     </record>
 
     <menuitem id="menu_driver_main" name="Team Drivers" parent="formula1.menu_constructors_main"/>
-    <menuitem id="menu_driver_sub" name="Drivers" parent="formula1.menu_driver_main" action="formula1.action_driver"/>
+    <menuitem id="menu_driver_sub" name="Main Drivers" parent="formula1.menu_driver_main"
+              action="formula1.action_driver"/>
 
     <record id="view_fans_form" model="ir.ui.view">
         <field name="name">view.fans.form</field>
@@ -700,6 +867,7 @@
                         <field name="fan_id"/>
                         <field name="fan_name"/>
                         <field name="constr"/>
+                        <field name="d_id"/>
                         <field name="fan_h"/>
                         <field name="fan_w"/>
                         <field name="fan_age"/>
@@ -714,10 +882,12 @@
         <field name="model">formula1.fans</field>
         <field name="arch" type="xml">
             <!--            Ex 5 Ques 2,3,4,5-->
-            <tree editable="bottom" create="1" delete="1" default_order="fan_name">
+            <!--            <tree editable="bottom" create="1" delete="1" default_order="fan_name">-->
+            <tree>
                 <field name="fan_id"/>
                 <field name="fan_name"/>
                 <field name="constr"/>
+                <field name="d_id"/>
                 <field name="fan_h"/>
                 <field name="fan_w"/>
                 <field name="fan_age"/>
@@ -736,6 +906,7 @@
                 <field name="fan_id"/>
                 <field name="fan_name"/>
                 <field name="constr"/>
+                <field name="d_id"/>
                 <field name="fan_h"/>
                 <field name="fan_w"/>
                 <field name="fan_age"/>
@@ -750,6 +921,7 @@
         <field name="arch" type="xml">
             <pivot>
                 <field name="constr" type="row"/>
+                <field name="d_id"/>
                 <field name="fan_name" type="col"/>
                 <field name="fan_h" type="measure"/>
                 <field name="fan_w" type="measure"/>
@@ -775,7 +947,9 @@
             <!--            Ex 5 Ques 11-->
             <form create="1" edit="1" delete="1">
                 <sheet>
-                    <group>
+                    <field name="img" widget="image" class="img"/>
+                    <group colspan="4" col="4">
+                        <field name="clr" widget="color_picker"/>
                         <field name="c_name"/>
                         <field name="const_cost"/>
                         <field name="driver_id"/>
@@ -822,11 +996,64 @@
         </field>
     </record>
 
+    <record id="view_circuit_kanban" model="ir.ui.view">
+        <field name="name">view.circuit.kanban</field>
+        <field name="model">formula1.circuit</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="c_name"/>
+                <field name="driver_id"/>
+                <field name="const_cost"/>
+                <field name="img"/>
+                <field name="clr"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{!selection_mode ? kanban_color(record.clr.raw_value) : ''} oe_kanban_card oe_kanban_global_click">
+                            <div class="float-container">
+                                <div class="float-child1">
+                                    <h2>
+                                        <field name="c_name"/>
+                                    </h2>
+                                    <div class="font-clr">
+                                        <field name="const_cost"/>
+                                    </div>
+                                </div>
+                                <div class="float-child2">
+                                    <field name="img" widget="image" class="img"/>
+                                </div>
+                            </div>
+                            <div class="o_dropdown_kanban o_dropdown">
+                                <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown"
+                                   data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                    <span class="fa fa-ellipsis-v"/>
+                                </a>
+                                <div class="dropdown-menu" role="menu">
+                                    <a role="menuitem" type="open" class="dropdown-item">Open</a>
+                                    <t t-if="widget.editable">
+                                        <a role="menuitem" type="edit" class="dropdown-item">Edit</a>
+                                    </t>
+                                    <t t-if="widget.deletable">
+                                        <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                    </t>
+                                    <div role="separator" class="dropdown-divider"/>
+                                    <a role="menuitem" type="object" name="update_rec" class="dropdown-item">Update
+                                        Circuit Record
+                                    </a>
+                                    <div role="separator" class="dropdown-divider"/>
+                                    <ul class="oe_kanban_colorpicker" data-field="clr"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
 
     <record id="action_circuit" model="ir.actions.act_window">
         <field name="name">Circuits</field>
         <field name="res_model">formula1.circuit</field>
-        <field name="view_mode">tree,form,graph,pivot</field>
+        <field name="view_mode">kanban,tree,form,graph,pivot</field>
     </record>
 
     <menuitem id="menu_circuit_main" name='Circuits' parent="formula1.menu_constructors_main"/>

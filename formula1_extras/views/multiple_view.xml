@@ -17,6 +17,8 @@
                         <field name="const_cost"/>
                         <field name="driver_id"/>
                         <field name="v_date"/>
+                        <field name="visited"/>
+                        <field name="visit_review" attrs="{'invisible':[('visited','!=','av')]}"/>
                     </group>
                 </sheet>
             </form>
@@ -38,6 +40,7 @@
                 <field name="const_cost"/>
                 <field name="driver_id"/>
                 <field name="v_date"/>
+                <field name="visited"/>
             </tree>
         </field>
     </record>

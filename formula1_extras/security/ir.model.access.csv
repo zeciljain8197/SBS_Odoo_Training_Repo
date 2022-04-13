@@ -6,3 +6,5 @@ access_driver_team_p, access.driver.team_p,model_formula1_driver,formula1.grp_fo
 access_extra_circuit_owner,access.extra.circuit.owner,model_extra_circuit,formula1.grp_formula1_owner,1,1,1,1
 access_extra_part_owner,access.extra.part.owner,model_extra_part,formula1.grp_formula1_owner,1,1,1,1
 access_multiple_inheritance_owner,access.multiple.inheritance.owner,model_multiple_inheritance,formula1.grp_formula1_owner,1,1,1,1
+access_academy_driver_owner,access.academy.driver.owner,model_academy_driver,formula1.grp_formula1_owner,1,1,1,1
+access_update_fan_visit_owner,access.update.fan.visit.owner,model_update_fan_visit,formula1.grp_formula1_owner,1,1,1,1

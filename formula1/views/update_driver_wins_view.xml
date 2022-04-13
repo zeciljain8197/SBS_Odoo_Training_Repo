@@ -10,7 +10,6 @@
                     <field name="d_wins"/>
                 </group>
                 <footer>
-                    <!--Ex 7 Ques 6-->
                     <button name="update_driver_wins" type="object" class="btn-primary" string="Update Driver Wins"/>
                     <button special="cancel" class="btn-danger" string="Close"/>
                 </footer>
@@ -23,4 +22,5 @@
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
+    <menuitem id="menu_driver_wins" name="Update Driver Wins" action="action_update_driver_wins" parent="formula1.menu_wiz_main"/>
 </odoo>

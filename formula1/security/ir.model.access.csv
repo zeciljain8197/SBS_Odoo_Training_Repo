@@ -12,3 +12,9 @@ access_update_fans_owner,access.update.fans.owner,model_update_fans,grp_formula1
 access_update_circuit_cost_owner,access.update.circuit.cost.owner,model_update_circuit_cost,grp_formula1_owner,1,1,1,1
 access_update_driver_wins_owner,access.update.driver.wins.owner,model_update_driver_wins,grp_formula1_owner,1,1,1,1
 access_update_fans_alt_owner,access.update.fans.alt.owner,model_update_fans_alt,grp_formula1_owner,1,1,1,1
+access_view_constr_owner,access.view.constr.owner,model_view_constr,grp_formula1_owner,1,1,1,1
+access_constructor_analysis_report_owner,access.constructor.analysis.report.owner,model_constructor_analysis,grp_formula1_owner,1,1,1,1
+access_constructor_report_wizard_owner,access.constructor.report.wizard.owner,model_constructor_report_wizard,grp_formula1_owner,1,1,1,1
+access_constructor_report_wizard_simple_owner,access.constructor.report.wizard.simple.owner,model_constructor_report_wizard_simple,grp_formula1_owner,1,1,1,1
+access_overall_report_wizard_owner,access.overall.report.wizard.owner,model_overall_report_wizard,grp_formula1_owner,1,1,1,1
+access_constructor_xls_report_wiz_owner,access.constructor.xls.report.wiz.owner,model_constructor_xls_report_wiz,grp_formula1_owner,1,1,1,1

@@ -21,7 +21,7 @@ class UpdateFans(models.TransientModel):
         fan_id = self.env['formula1.fans']
         fan_id.create({
             'fan_id': self.fan_id,
-            'fan_name' : self.name,
+            'fan_name': self.name,
             'constr': self.constr_name.id,
             'fan_h': self.fan_h,
             'fan_w': self.fan_w,

@@ -1,4 +1,4 @@
-from odoo import models, fields, api, exceptions
+from odoo import models, fields, api, exceptions, tools
 from odoo.exceptions import ValidationError, UserError
 from datetime import datetime
 
@@ -98,7 +98,7 @@ class Constructors(models.Model):
 
     # Defining fields for uploading Documents/Images on the server
     docu = fields.Binary('Constructor Info', attachment=True, help='Enter the constructor logo here!')
-    img = fields.Image('Constructor Logo')
+    img = fields.Image('Constructor Logo', default='image_128')
 
     # Defining a field for preserving the file name of the uploaded file
     file_name = fields.Char()
@@ -106,7 +106,7 @@ class Constructors(models.Model):
     # Defining fields where we will compute certain values automatically using compute attr and passing fn in them.
     t_1 = fields.Float('Fan Description 1', compute='_calc_fd_1')
     t_2 = fields.Float('Fan Description 2', compute='_calc_fd_2')
-    t_3 = fields.Integer('Total Fandom %', compute='_calc_tf')
+    t_3 = fields.Float('Total Fandom %', compute='_calc_tf')
     state = fields.Selection(
         selection=[('s1', 'Established Team'), ('s2', 'Title Contender'), ('s3', 'Sister Team'), ('s4', 'Underdog'),
                    ('s5', 'New Entrant')], default='s1', string='States')
@@ -146,18 +146,35 @@ class Constructors(models.Model):
 
     # Ques 24
     # @api.model_create_multi
-    # def create(self, vals_list):
-    #     """
-    #     Overridden create() method to add sequence
-    #     ------------------------------------------
-    #     :param self: object pointer
-    #     :param vals_list: List of dictionary containing fields and values
-    #     :return: recordset of the newly created record(s)
-    #     """
-    #     seq = self.env.ref('formula1.constructors_const_id_seq')
-    #     for vals in vals_list:
-    #         vals['name'] = seq.next_by_id()
-    #     return super().create(vals_list)
+    @api.model
+    def create(self, values):
+        """
+        Overridden create() method to add sequence
+        ------------------------------------------
+        :param self: object pointer
+        :param vals_list: List of dictionary containing fields and values
+        :return: recordset of the newly created record(s)
+        """
+        # seq = self.env.ref('formula1.constructors_const_id_seq')
+        # for vals in vals_list:
+        #     vals['name'] = seq.next_by_id()
+        # return super().create(vals_list)
+        if 'img' in values:
+            image = tools.ImageProcess(values['img'])
+            resize_image = image.resize(300, 300)
+            resize_image_b64 = resize_image.image_base64()
+            values['img'] = resize_image_b64
+        obj = super().create(values)
+        return obj
+
+    def write(self, vals):
+        if 'img' in vals:
+            image = tools.ImageProcess(vals['img'])
+            resize_image = image.resize(300, 300)
+            resize_image_b64 = resize_image.image_base64()
+            vals['img'] = resize_image_b64
+        obj = super().write(vals)
+        return obj
 
     # Ques17
     @api.onchange('driver_id')
@@ -287,7 +304,7 @@ class Constructors(models.Model):
             if record.t_1 != 0:
                 record.t_3 = 100 * (record.t_2 / record.t_1)
             else:
-                record.t_3 == 0
+                record.t_3 = 0
 
     def new_record(self):
         """
@@ -453,6 +470,7 @@ class Driver(models.Model):
 
     name = fields.Char('Driver Name', required=True, help="Enter the name of the team drivers!", copy=False)
     d_no = fields.Integer('Driver Number', required=True, help="Enter the driver number!")
+    fan_id = fields.Many2one('formula1.fans', "Fan Name")
     salary = fields.Float('Salary')
     # group_operator = 'avg'
     test_driver = fields.One2many('formula1.constructors', 'driver_id', string='Main Driver For')
@@ -465,6 +483,8 @@ class Driver(models.Model):
     d_podiums = fields.Integer('No of Podiums')
     d_o_b = fields.Date('Date of Birth')
     age = fields.Integer('Driver Age')
+    img = fields.Image('Driver Image')
+    clr = fields.Integer('Color Index')
 
     # Ex 7 Ques 7
     def update_driver_wins_2(self):
@@ -486,12 +506,27 @@ class Driver(models.Model):
         :param vals_list: A list of dictionary containing fields and values, used to create records
         :return: A recordset of newly created records
         """
-        for vals in vals_list:
-            if not vals.get('d_code', False):
-                vals['d_code'] = vals.get('name').split()[1][:3].upper()
-        res = super().create(vals_list)
-        print('Create method override', res)
-        return res
+        # for vals in values:
+        #     if not vals.get('d_code', False):
+        #         vals['d_code'] = vals.get('name').split()[1][:3].upper()
+        # res = super().create(values)
+        # print('Create method override', res)
+        if 'img' in vals_list:
+            image = tools.ImageProcess(vals_list['img'])
+            resize_image = image.resize(300, 300)
+            resize_image_b64 = resize_image.image_base64()
+            vals_list['img'] = resize_image_b64
+        obj = super().create(vals_list)
+        return obj
+
+    def write(self, vals):
+        if 'img' in vals:
+            image = tools.ImageProcess(vals['img'])
+            resize_image = image.resize(300, 300)
+            resize_image_b64 = resize_image.image_base64()
+            vals['img'] = resize_image_b64
+        obj = super().write(vals)
+        return obj
 
     # Ques4
     # def write(self, vals):
@@ -684,15 +719,16 @@ class Fans(models.Model):
 
     # Defining a M2O field for the respective O2M field in main model which uses this field as inverse name.
     constr = fields.Many2one(comodel_name='formula1.constructors', string='Constructor Name', ondelete="set null")
+    d_id = fields.Many2one('formula1.driver', 'Driver Name')
     # domain=[('name', 'like', '%ed%')])
     fan_h = fields.Float('Fan Height')
     fan_w = fields.Float('Fan Weight')
     fan_age = fields.Float('Fan Age')
 
     # Defined another set of fields for calculating certain some value from entered values in these fields.
-    fan_desc_1 = fields.Float('Fan Desc 1', compute='_calc_fan1')
-    fan_desc_2 = fields.Float('Fan Desc 2', compute='_calc_fan2')
-    perc = fields.Integer('Fandom Percentage', compute='_calc_fan3')
+    fan_desc_1 = fields.Float('Fan Desc 1', compute='_calc_fan1', store=True)
+    fan_desc_2 = fields.Float('Fan Desc 2', compute='_calc_fan2', store=True)
+    perc = fields.Integer('Fandom Percentage', compute='_calc_fan3', store=True)
 
     # Defined the functions for their respective compute fields.
     @api.depends('fan_h', 'fan_w', 'fan_age')
@@ -737,6 +773,27 @@ class Circuit(models.Model):
     c_name = fields.Char('Circuit Name', size=64, help='Enter the circuit name!')
     const_cost = fields.Integer('Construction Costs', group_operator='max')
     driver_id = fields.Many2one('formula1.driver', 'Most Wins By Driver')
+    img = fields.Image('Circuit Image')
+    clr = fields.Integer('Color Index')
+
+    @api.model
+    def create(self, values):
+        if 'img' in values:
+            image = tools.ImageProcess(values['img'])
+            resize_image = image.resize(300, 300)
+            resize_image_b64 = resize_image.image_base64()
+            values['img'] = resize_image_b64
+        obj = super().create(values)
+        return obj
+
+    def write(self, vals):
+        if 'img' in vals:
+            image = tools.ImageProcess(vals['img'])
+            resize_image = image.resize(300, 300)
+            resize_image_b64 = resize_image.image_base64()
+            vals['img'] = resize_image_b64
+        obj = super().write(vals)
+        return obj
 
 
 class Part(models.Model):

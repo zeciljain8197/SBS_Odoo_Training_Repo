@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_constructor_analysis_tree" model="ir.ui.view">
+        <field name="name">view.constructor.analysis.tree</field>
+        <field name="model">constructor.analysis</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="constructor_name"/>
+                <field name="d_id"/>
+                <field name="engine"/>
+                <field name="t_3"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_constructor_analysis_pivot" model="ir.ui.view">
+        <field name="name">view.constructor.analysis.pivot</field>
+        <field name="model">constructor.analysis</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="constructor_name" type="row"/>
+                <field name="d_id" type="col"/>
+                <field name="engine" type="row"/>
+                <field name="t_3" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_constructor_analysis" model="ir.actions.act_window">
+        <field name="name">Constructor Analysis</field>
+        <field name="res_model">constructor.analysis</field>
+        <field name="view_mode">tree,pivot</field>
+    </record>
+
+    <menuitem id="menu_reporting" name="Reporting" parent="menu_constructors_main"/>
+    <menuitem id="menu_const_report" parent="menu_reporting" action="action_constructor_analysis"/>
+</odoo>

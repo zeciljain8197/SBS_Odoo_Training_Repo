@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="view_academy_form_inherit_fields" model="ir.ui.view">
-        <field name="name">view.academy.form.inherit_fields</field>
+        <field name="name">view.academy.form.inherit.fields</field>
         <field name="model">formula1.constructors</field>
         <field name="inherit_id" ref="formula1.view_constructors_form"/>
         <field name="arch" type="xml">
@@ -9,8 +9,8 @@
             <xpath expr="/form/sheet/group/field[@name='sign_in']" position="replace">
                 <field name="a_exist"/>
             </xpath>
-            <xpath expr="/form/sheet/group/field[@name='email']" position="before">
-                <field name="a_no"/>
+            <xpath expr="/form/sheet/group/field[@name='a_exist']" position="after">
+                <field name="a_no" attrs="{'invisible':[('a_exist','!=',True)]}"/>
             </xpath>
             <xpath expr="/form/sheet/group/field[@name='priority']" position="after">
                 <field name="awards"/>
@@ -82,6 +82,7 @@
                 <sheet>
                     <group>
                         <field name="a_name"/>
+                        <field name="main_team"/>
                         <field name="a_series"/>
                     </group>
                 </sheet>
@@ -96,6 +97,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="a_name"/>
+                <field name="main_team"/>
                 <field name="a_series"/>
             </tree>
         </field>
@@ -128,9 +130,126 @@
     <record id="formula1.action_driver" model="ir.actions.act_window">
         <field name="name">Drivers</field>
         <field name="res_model">formula1.driver</field>
-        <field name="view_mode">tree,form,graph,pivot</field>
+        <field name="view_mode">kanban,tree,form,graph,pivot</field>
         <field name="domain">[('name','like','a')]</field>
         <field name="context">{'default_name':'Charles Leclerc'}</field>
     </record>
 
+    <!--Ex 7 Ques 8-->
+    <record id="view_teams_tree_wiz" model="ir.ui.view">
+        <field name="name">view.teams.tree.wiz</field>
+        <field name="model">formula1.extras.teams</field>
+        <field name="arch" type="xml">
+            <tree>
+                <header>
+                    <button special="cancel" string="Close" class="btn-danger"/>
+                </header>
+                <field name="a_name"/>
+                <field name="main_team"/>
+                <field name="a_series"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_teams_wiz" model="ir.actions.act_window">
+        <field name="name">Academy Teams Alt</field>
+        <field name="res_model">formula1.extras.teams</field>
+        <field name="view_mode">tree</field>
+        <field name="target">new</field>
+        <field name="context">{'tree_view_ref':'formula1_extras.view_teams_tree_wiz'}</field>
+        <field name="domain">[('main_team','=',active_id)]</field>
+    </record>
+
+<!--    <record id="view_academy_driver_form" model="ir.ui.view">-->
+<!--        <field name="name">view.academy.driver.form</field>-->
+<!--        <field name="model">academy.driver</field>-->
+<!--        <field name="inherit_id" ref="formula1.view_driver_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='name']" position="after">-->
+<!--                <field name="junior_for"/>-->
+<!--                <field name="driving_in"/>-->
+<!--                <field name="driving_for"/>-->
+<!--                <field name="reserve"/>-->
+<!--                <field name="const_name" attrs="{'invisible':[('reserve','!=',True)]}"/>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//field[@name='d_state']" position="replace">-->
+<!--                <field name="d_state" widget="statusbar" statusbar_visible="d1,d2,d3,d4,d5,d6" clickable="1"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+     <record id="view_academy_driver2_form" model="ir.ui.view">
+        <field name="name">view.academy.driver2.form</field>
+        <field name="model">academy.driver</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="d_state" widget="statusbar" statusbar_visible="d1,d2,d3,d4,d5,d6" clickable="1"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Academy Driver" bg_color="bg-success"
+                            attrs="{'invisible': [('d_state', '!=', 'd6')]}"/>
+                    <widget name="web_ribbon" title="Rookie" bg_color="bg-warning"
+                            attrs="{'invisible': [('d_state', '!=', 'd5')]}"/>
+                    <group colspan="4" col="4">
+                        <field name="d_no"/>
+                        <field name="name"/>
+                        <field name="junior_for"/>
+                        <field name="driving_in"/>
+                        <field name="driving_for"/>
+                        <field name="reserve"/>
+                        <field name="const_name" attrs="{'invisible':[('reserve','!=',True)]}"/>
+                        <field name="salary"/>
+                        <field name="d_code"/>
+                        <field name="d_o_b"/>
+                        <field name="age"/>
+                        <field name="d_nation"/>
+                        <field name="d_wins"/>
+                        <field name="d_podiums"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+     </record>
+
+<!--    <record id="view_academy_driver_tree" model="ir.ui.view">-->
+<!--        <field name="name">view.academy.driver.tree</field>-->
+<!--        <field name="model">academy.driver</field>-->
+<!--        <field name="inherit_id" ref="formula1.view_driver_tree"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='d_no']" position="after">-->
+<!--                <field name="junior_for"/>-->
+<!--                <field name="driving_for"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="view_academy_driver2_tree" model="ir.ui.view">
+        <field name="name">view.academy.driver2.tree</field>
+        <field name="model">academy.driver</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="d_no"/>
+                <field name="salary" avg="Average Salary"/>
+                <field name="d_code" optional="show"/>
+                <field name="age" optional="show"/>
+                <field name="d_nation" optional="show"/>
+                <field name="d_wins" optional="show"/>
+                <field name="d_podiums" optional="hide"/>
+                <field name="d_state" widget="badge" decoration-success="d_state=='d1'"
+                       decoration-warning="d_state=='d2'"
+                       decoration-danger="d_state=='d3'" decoration-info="d_state=='d4'"
+                       decoration-primary="d_state=='d5'"/>
+                <field name="junior_for"/>
+                <field name="driving_for"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_academy_driver" model="ir.actions.act_window">
+        <field name="name">Academy Driver</field>
+        <field name="res_model">academy.driver</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_academy_driver" name="Academy Drivers" action="formula1_extras.action_academy_driver" parent="formula1.menu_driver_main"/>
 </odoo>

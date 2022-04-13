@@ -8,3 +8,8 @@ class MultipleInheritance(models.Model):
     _description = 'Multiple inheritance'
 
     v_date = fields.Datetime('Visit Date')
+    visited = fields.Selection(
+        selection=[('yt', 'Yet to Visit'), ('vtw', 'Visiting this Weekend'), ('av', 'Already visited')],
+        string='Visit Info')
+    visit_review = fields.Boolean('Was Visit Satisfactory?')
+
