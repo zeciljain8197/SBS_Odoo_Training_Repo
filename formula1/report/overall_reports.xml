@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="overall_report_html" model="ir.actions.report">
+        <field name="name">Overall Report(HTML)</field>
+        <field name="model">formula1.constructors</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">formula1.report_overall</field>
+        <field name="report_file">formula1.report_overall</field>
+        <field name="binding_model_id" ref="model_formula1_constructors"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="overall_report_pdf" model="ir.actions.report">
+        <field name="name">Overall Report(PDF)</field>
+        <field name="model">formula1.constructors</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">formula1.report_overall</field>
+        <field name="report_file">formula1.report_overall</field>
+        <field name="binding_model_id" ref="model_formula1_constructors"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

@@ -1,0 +1,85 @@
+.style_sheet {
+    font-family:Times New Roman;
+    font-size:15px;
+    font-weight:bold;
+    font-style:italic;
+    color:darkblue;
+}
+.img{
+    object-fit: fill;
+    height:122px;
+    width:200px;
+}
+.float-container {
+    padding: 0px;
+    font-family:Times New Roman;
+    font-size:15px;
+}
+
+.float-child2 {
+    width: 50%;
+    float: left;
+    padding: 5px;
+}
+.float-child1 {
+    background-color: #ffd79c;
+    width: 50%;
+    float: left;
+    padding: 5px;
+}
+.font-clr{
+    font-weight:bold;
+    color:darkblue;
+}
+.sheet-color{
+    border: 2px solid black;
+    background-image: linear-gradient(to right, #4CA1AF 0%, #C4E0E5  51%, #4CA1AF  100%);
+    background-color: transparent;
+    box-shadow: 10px 10px 5px silver;
+}
+.group-shadow{
+    border: 2px solid black;
+    padding: 10px;
+    font-family:Helvetica;
+    box-shadow: 10px 10px 5px silver;
+}
+.button {
+    transition-duration: 0.4s;
+    border-radius: 12px;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 2px 1px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-image: linear-gradient(to right, #4CA1AF 0%, #C4E0E5  51%, #4CA1AF  100%);
+}
+
+.button:hover {
+    background-color: #008CBA;
+    color: black;
+    background-position: right center;
+}
+.button2 {
+    transition-duration: 0.4s;
+    border-radius: 12px;
+    color: white;
+    padding: 50px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-image: linear-gradient(to right, #4CA1AF 0%, #C4E0E5  51%, #4CA1AF  100%);
+}
+
+.button2:hover {
+    background-color: #008CBA;
+    color: black;
+    background-position: right center;
+}
+

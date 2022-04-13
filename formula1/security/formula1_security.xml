@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="grp_formula1_owner" model="res.groups">
+        <field name="name">Owner</field>
+    </record>
+    <record id="grp_formula1_team_p" model="res.groups">
+        <field name="name">Team Principle</field>
+    </record>
+    <record id="grp_formula1_driver" model="res.groups">
+        <field name="name">Driver</field>
+    </record>
+</odoo>

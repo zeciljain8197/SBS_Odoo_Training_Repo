@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_overall" inherit_id="formula1.report_overall">
+        <xpath expr="//table" position="inside">
+            <table class="table">
+                <div id="extras" class="row mt32 mb32">
+                    <div class="col-auto col-3 mw-100 mb-2" name="Fav Circuit">
+                        <tr>
+                            <td>
+                                <strong>Entry Fees</strong>
+                            </td>
+                            <td>
+                                <p class="m-0" t-esc="form['entry_fees']"/>
+                            </td>
+                            <td>
+                                <strong>c_code</strong>
+                            </td>
+                            <td>
+                                <p class="m-0" t-esc="form['c_code']"/>
+                            </td>
+                        </tr>
+                    </div>
+                </div>
+            </table>
+        </xpath>
+    </template>
+</odoo>

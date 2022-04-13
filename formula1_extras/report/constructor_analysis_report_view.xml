@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_constructor_analysis_tree" model="ir.ui.view">
+        <field name="name">view.constructor.analysis.tree</field>
+        <field name="model">constructor.analysis</field>
+        <field name="inherit_id" ref="formula1.view_constructor_analysis_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='engine']" position="after">
+                <field name="fan_name"/>
+                <field name="wins"/>
+                <field name="entry_fees"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_constructor_analysis_pivot" model="ir.ui.view">
+        <field name="name">view.constructor.analysis.pivot</field>
+        <field name="model">constructor.analysis</field>
+        <field name="inherit_id" ref="formula1.view_constructor_analysis_pivot"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='d_id']" position="after">
+                <field name="fan_name"/>
+                <field name="wins" type="measure"/>
+                <field name="entry_fees"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

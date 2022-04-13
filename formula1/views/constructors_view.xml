@@ -1,0 +1,1098 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_constructors" model="ir.actions.act_window">
+        <field name="name">Constructors</field>
+        <field name="res_model">formula1.constructors</field>
+        <field name="view_mode">kanban,tree,form,calendar,graph,search</field>
+        <!--        <field name="context">{'group_by':'state'}</field>-->
+    </record>
+
+    <record id="action_fans" model="ir.actions.act_window">
+        <field name="name">Fans</field>
+        <field name="res_model">formula1.fans</field>
+        <field name="view_mode">tree,form,pivot,search</field>
+    </record>
+
+    <record id="view_constructors_form" model="ir.ui.view">
+        <field name="name">view.constructors.form</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="%(action_entry_fees_wiz2)d"
+                            type="action"
+                            string="Update Fees"
+                            class="button2 button2:hover"/>
+                    <button name="%(action_fans_wiz)d"
+                            type="action"
+                            string="Update Fans"
+                            class="button2 button2:hover"/>
+                    <button name="%(action_view_constr)d"
+                            type="action"
+                            string="View Constructors"
+                            class="button2 button2:hover"/>
+                    <button name="%(action_constructor_report_wiz_simple)d"
+                            type="action"
+                            string="Report Wizard"
+                            class="button2 button2:hover"/>
+                    <button name="%(action_overall_report_wiz)d"
+                            type="action"
+                            string="Overall Report Wizard"
+                            class="button2 button2:hover"/>
+                    <field name="state" widget="statusbar" statusbar_visible="s1,s2,s3,s4,s5" clickable="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_constructors)d"
+                                string="Open records"
+                                type="action"
+                                class="oe_stat_button "
+                                icon="fa-exchange"/>
+                        <button name="cur_user"
+                                string="Current User"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-user"/>
+                        <button name="%(action_fans)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-meh-o"
+                                context="{'search_default_constr':active_id}">
+                            <field name="fan_count" widget="statinfo"/>
+                        </button>
+                        <button name="academy_ct"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-cogs"
+                                context="{'search_default_main_team':active_id}">
+                            <field name="team_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Title Contender" bg_color="bg-warning"
+                            attrs="{'invisible': [('engine', '!=', 'ferrari')]}"/>
+                    <widget name="web_ribbon" title="Champion" bg_color="bg-success"
+                            attrs="{'invisible': [('engine', '!=', 'redbull')]}"/>
+                    <!--                    Ex 5 Ques 14-->
+                    <widget name="web_ribbon" title="Archived Constructor" bg_color="bg-danger"
+                            attrs="{'invisible': [('active', '!=', False)]}"/>
+                    <label for="name"/>
+                    <!--    Ex 5 Ques 40-41-->
+                    <field name="img" widget="image" class="oe_avatar"/>
+                    <h1 style="color:orange;font-family:TimesNewRoman">
+                        <field name="name" placeholder="Enter name of constructor ex. Redbull Racing"/>
+                    </h1>
+                    <group colspan="4" col="4" class="sheet-color group-shadow">
+                        <field name="clr" widget="color_picker"/>
+                        <field name="const_id" required="1"/>
+                        <!--    Ex5 Ques 42,43-->
+                        <field name="c_code" class="style_sheet"/>
+                        <field name="active"/>
+                        <field name="entry_fees"/>
+                        <field name="currency_id"/>
+                        <field name="val"/>
+                        <field name="st_date"/>
+                        <field name="nxt_date"/>
+                        <field name="password" password="1"/>
+                        <label for="test_entry" string="Entry_test"/>
+                        <field name="test_entry" nolabel="1"/>
+                        <field name="email" widget="email"/>
+                        <field name="webst" widget="url"/>
+                        <field name="sign_in"/>
+                        <field name="engine" widget="radio"/>
+                        <field name="priority" widget="priority"/>
+                        <!--    Ex 5 Ques 36-->
+                        <field name="driver_id"/>
+                        <!--                        Internal views are only applicable to O2M fields-->
+                        <!--                            <form>-->
+                        <!--                                <header>-->
+                        <!--                                    <field name="d_state" widget="statusbar" statusbar_visible="d1,d2,d3,d4,d5"-->
+                        <!--                                           clickable="1"/>-->
+                        <!--                                </header>-->
+                        <!--                                <sheet>-->
+                        <!--                                    <widget name="web_ribbon" title="Legendary Driver" bg_color="bg-success"-->
+                        <!--                                            attrs="{'invisible': [('d_state', '!=', 'd1')]}"/>-->
+                        <!--                                    <widget name="web_ribbon" title="Veteran Driver" bg_color="bg-warning"-->
+                        <!--                                            attrs="{'invisible': [('d_state', '!=', 'd2')]}"/>-->
+                        <!--                                    <group colspan="4" col="4">-->
+                        <!--                                        <field name="d_no"/>-->
+                        <!--                                        <field name="name"/>-->
+                        <!--                                        <field name="salary"/>-->
+                        <!--                                        <field name="d_code"/>-->
+                        <!--                                        <field name="d_o_b"/>-->
+                        <!--                                        <field name="age"/>-->
+                        <!--                                        <field name="d_nation"/>-->
+                        <!--                                    </group>-->
+                        <!--                                </sheet>-->
+                        <!--                            </form>-->
+
+                        <!--                            <tree>-->
+                        <!--                                <field name="name"/>-->
+                        <!--                                <field name="d_no"/>-->
+                        <!--                                <field name="salary" avg="Average Salary"/>-->
+                        <!--                                <field name="d_code" optional="show"/>-->
+                        <!--                                <field name="age" optional="show"/>-->
+                        <!--                                <field name="d_wins" optional="show"/>-->
+                        <!--                            </tree>-->
+                        <!--                        </field>-->
+                        <field name="extra_info"/>
+                        <field name="docu" filename="file_name"/>
+                        <field name="t_1"/>
+                        <field name="t_2"/>
+                        <field name="t_3" widget="percentpie"/>
+                        <field name="parent_id" domain="[('id','!=',active_id)]"/>
+                        <field name="file_name" invisible="1"/>
+                        <field name="sign_out" widget="float_time" invisible="1"/>
+                        <field name="podiums"/>
+                        <field name="wins" attrs="{'invisible':[('winner','=',True)]}"/>
+                        <field name="winner"/>
+                        <field name="current_user" groups="grp_formula1_driver"/>
+                        <field name="test_str"/>
+                        <field name="test_end"/>
+                    </group>
+                </sheet>
+                <sheet>
+                    <separator string="Notes" class="sheet-color"/>
+                    <field name="const_notes"/>
+                </sheet>
+                <sheet>
+                    <notebook class="sheet-color">
+                        <page name="pg_driver1_notes" string="Driver1 Notes">
+                            <field name="driver1_notes"/>
+                        </page>
+                        <page name="pg_driver2_notes" string="Driver2 Notes">
+                            <field name="driver2_notes"/>
+                        </page>
+                        <!--    Ex 5 Ques 35-->
+                        <page name="pg_fans_notes" string="Top Fans notes">
+                            <field name="fan_ids">
+                                <form>
+                                    <sheet>
+                                        <group colspan="4" col="4">
+                                            <field name="fan_id"/>
+                                            <field name="fan_name"/>
+                                            <field name="constr"/>
+                                            <field name="fan_age"/>
+                                            <field name="fan_h"/>
+                                            <field name="fan_w"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+
+                                <tree>
+                                    <field name="fan_id"/>
+                                    <field name="fan_name"/>
+                                    <field name="constr"/>
+                                    <field name="fan_h"/>
+                                    <field name="fan_w"/>
+                                    <field name="fan_age"/>
+                                    <field name="perc" widget="progressbar"/>
+                                </tree>
+                            </field>
+                            <button name="new_one2many"
+                                    string="Fans"
+                                    type="object"
+                                    icon="fa-cogs"/>
+                            <button name="unlink_rec"
+                                    string="Fan Remover"
+                                    type="object"
+                                    icon="fa-refresh"/>
+                            <button name="unlink_all"
+                                    string="All fan remover"
+                                    type="object"
+                                    icon="fa-times"/>
+                        </page>
+                        <page name="pg_fav_circ_notes" string="Fav Circuits">
+                            <field name="fav_ids" widget="many2many_tags"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                        </page>
+                        <page name="pg_part_notes" string="Part Suppliers">
+                            <field name="part_ids" widget="many2many_checkboxes"/>
+                        </page>
+                        <page name="pg_child_notes" string="Consumer Teams">
+                            <field name="child_ids"/>
+                        </page>
+                        <page name="pg_win_notes" string="Last wins" attrs="{'invisible':[('winner','=',False)]}">
+                            <field name="win_notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <!--    Ex 6 Ques 15-->
+                <sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </sheet>
+                <footer style="text-align:center">
+                    <button name="new_record"
+                            string="Driver"
+                            type="object"
+                            icon="fa-user"
+                            class="button button:hover"/>
+                    <button name="update_rec"
+                            string="Circuits"
+                            type="object"
+                            icon="fa-exchange"
+                            class="button button:hover"/>
+                    <button name="link_ids"
+                            string="Link Circuits"
+                            type="object"
+                            icon="fa-pencil-square-o"
+                            class="button button:hover"/>
+                    <button name="button_for_env"
+                            string="Env Results"
+                            type="object"
+                            class="button button:hover"/>
+                    <button name="create_sequence"
+                            string="Sequence"
+                            type="object"
+                            class="button button:hover"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_constructors_form_engine" model="ir.ui.view">
+        <field name="name">view.constructors.form.engine</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="s1,s2,s3,s4,s5" clickable="1"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Title Contender" bg_color="bg-warning"
+                            attrs="{'invisible': [('engine', '!=', 'mercedes')]}"/>
+                    <widget name="web_ribbon" title="Champion" bg_color="bg-success"
+                            attrs="{'invisible': [('engine', '!=', 'redbull')]}"/>
+                    <!--                    Ex 5 Ques 14-->
+                    <widget name="web_ribbon" title="Archived Constructor" bg_color="bg-danger"
+                            attrs="{'invisible': [('active', '!=', False)]}"/>
+                    <label for="name"/>
+                    <h1>
+                        <field name="name" placeholder="Enter name of constructor ex. Mercedes"/>
+                    </h1>
+                    <field name="img" widget="image" class="oe_avatar"/>
+                    <separator string=""/>
+                    <group colspan="4" col="4">
+                        <field name="const_id" required="1"/>
+                        <field name="c_code"/>
+                        <field name="active"/>
+                        <field name="entry_fees"/>
+                        <field name="st_date"/>
+                        <field name="nxt_date"/>
+                        <field name="engine" widget="radio"/>
+                        <field name="priority" widget="priority" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="driver_id" widget="selection"/>
+                        <field name="t_1"/>
+                        <field name="t_2"/>
+                        <field name="t_3" widget="percentpie"/>
+                        <field name="parent_id" domain="[('id','!=',active_id)]"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_constructors_tree" model="ir.ui.view">
+        <field name="name">view.constructors.tree</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <!--            Ex 5 Ques 7-->
+            <tree decoration-success="state=='s1'" decoration-info="state=='s2'" decoration-warning="state=='s3'"
+                  decoration-primary="state=='s4'" decoration-muted="state=='s5'" decoration-danger="active==False"
+                  multi_edit="1">
+                <!--                  Ex 5 Ques 6 above -->
+                <field name="sequence" widget="handle"/>
+                <field name="const_id"/>
+                <field name="c_code"/>
+                <field name="active"/>
+                <field name="name"/>
+                <field name="entry_fees"/>
+                <!--    Ex 6 Ques 17-->
+                <field name="driver_id" widget="list_activity"/>
+                <field name="engine"/>
+                <field name="nxt_date"/>
+                <field name="state" widget="badge"/>
+                <!--                <field name="state" widget="badge" decoration-success="state=='s1'" decoration-info="state=='s2'"-->
+                <!--                       decoration-danger="state=='s3'" decoration-warning="state=='s4'"-->
+                <!--                       decoration-primary="state=='s5'"/>-->
+                <field name="st_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_constructors_tree_engine" model="ir.ui.view">
+        <field name="name">view.constructors.tree.engine</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state=='s1'" decoration-info="state=='s2'" decoration-warning="state=='s3'"
+                  decoration-primary="state=='s4'" decoration-muted="state=='s5'" decoration-danger="active==False"
+                  multi_edit="1">
+                <field name="sequence" widget="handle"/>
+                <field name="active"/>
+                <field name="const_id"/>
+                <field name="c_code"/>
+                <field name="name"/>
+                <field name="engine"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_constructors_tree_max" model="ir.ui.view">
+        <field name="name">view.constructors.tree.max</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state=='s1'" decoration-info="state=='s2'" decoration-warning="state=='s3'"
+                  decoration-primary="state=='s4'" decoration-muted="state=='s5'" decoration-danger="active==False"
+                  multi_edit="1">
+                <field name="sequence" widget="handle"/>
+                <field name="active"/>
+                <field name="const_id"/>
+                <field name="c_code"/>
+                <field name="name"/>
+                <field name="engine"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_constructors_tree_charles" model="ir.ui.view">
+        <field name="name">view.constructors.tree.charles</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state=='s1'" decoration-info="state=='s2'" decoration-warning="state=='s3'"
+                  decoration-primary="state=='s4'" decoration-muted="state=='s5'" decoration-danger="active==False"
+                  multi_edit="1">
+                <field name="sequence" widget="handle"/>
+                <field name="active"/>
+                <field name="const_id"/>
+                <field name="c_code"/>
+                <field name="name"/>
+                <field name="engine"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_constructors_tree_jehan" model="ir.ui.view">
+        <field name="name">view.constructors.tree.jehan</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state=='s1'" decoration-info="state=='s2'" decoration-warning="state=='s3'"
+                  decoration-primary="state=='s4'" decoration-muted="state=='s5'" decoration-danger="active==False"
+                  multi_edit="1">
+                <field name="sequence" widget="handle"/>
+                <field name="active"/>
+                <field name="const_id"/>
+                <field name="c_code"/>
+                <field name="name"/>
+                <field name="engine"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_constructors_search" model="ir.ui.view">
+        <field name="name">Constructors</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="const_id"/>
+                <field name="active"/>
+                <field name="name"/>
+                <field name="entry_fees"/>
+                <field name="engine"/>
+                <field name="st_date"/>
+                <filter name="fil_red" string="redbull" domain="[('engine','=','redbull')]"/>
+                <filter name="fil_mer" string="mercedes" domain="[('engine','=','mercedes')]"/>
+                <filter name="fil_fer" string="ferrari" domain="[('engine','=','ferrari')]"/>
+                <filter name="fil_ren" string="renault" domain="[('engine','=','renault')]"/>
+                <!--                Ex 5 Ques 1:-->
+                <filter name="fil_jd" string="Join Date" date="st_date"/>
+                <filter name="grp_by_date" string="Date" context="{'group_by':'st_date'}"/>
+                <filter name="grp_by_engine" string="Engine" context="{'group_by':'engine'}"/>
+                <filter name="grp_by_states" string="States" context="{'group_by':'state'}"/>
+                <!--                Ex 5 Ques 2-->
+                <searchpanel>
+                    <field name="engine" icon="fa-users"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_constructors_calendar" model="ir.ui.view">
+        <field name="name">view.constructors.calendar</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <!--    Ex 5 Ques 15-->
+            <!--    Ex 5 Ques 18-->
+            <!--            <calendar date_start="nxt_date" mode="month" event_limit="2">-->
+            <!--    Ex 5 Ques 16-->
+            <!--            <calendar date_start="test_str" date_stop="test_end" mode="month">-->
+            <!--    Ex 5 Ques 17-->
+            <calendar date_start="test_str" date_stop="test_end" mode="day" event_limit="3">
+                <!--                <field name="nxt_date"/>-->
+                <field name="test_str"/>
+                <field name="test_end"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_constructors_calendar_alt" model="ir.ui.view">
+        <field name="name">view.constructors.calendar.alt</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <calendar date_start="test_str" date_stop="test_end" mode="day">
+                <field name="test_str"/>
+                <field name="test_end"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Ex 5 Ques 19-->
+    <record id="view_constructors_graph" model="ir.ui.view">
+        <field name="name">view.constructors.graph</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <!--            Ex 5 Ques 20-->
+            <!--            <graph string="Constructor Valuation" type="bar" stacked="0">-->
+            <!--                Ex 5 Ques 21-->
+            <graph string="Constructor Valuation" type="bar" stacked="1">
+                <!--                <field name="name" type="row"/>-->
+                <field name="engine" type="row"/>
+                <field name="driver_id" type="col"/>
+                <field name="val" type="measure"/>
+                <field name="entry_fees" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_constructors_graph_alt" model="ir.ui.view">
+        <field name="name">view.constructors.graph.alt</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <graph string="Constructor Valuation alt" type="pie">
+                <field name="engine" type="row"/>
+                <field name="driver_id" type="col"/>
+                <field name="entry_fees" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!--    Ex 5 Ques 27-->
+    <record id="action_fans_alt" model="ir.actions.act_window">
+        <field name="name">Constructor Fans</field>
+        <field name="res_model">formula1.fans</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{'search_default_constr':active_id}</field>
+    </record>
+
+    <record id="view_constructors_kanban" model="ir.ui.view">
+        <field name="name">view.constructors.kanban</field>
+        <field name="model">formula1.constructors</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="engine">
+                <!--We need to add the color field in kanban view before template to enable usage of various colors
+                which will be fetched from that fields values.-->
+                <field name="clr"/>
+                <field name="state"/>
+                <progressbar field="state"
+                             colors='{"s1": "info", "s2": "warning", "s3":"primary","s4":"danger","s5":"success"}'/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{!selection_mode ? kanban_color(record.clr.raw_value) : ''} oe_kanban_card oe_kanban_global_click">
+                            <!--    Ex 5 Ques 28-->
+                            <div class="float-container">
+                                <div class="float-child1">
+                                    <h2>
+                                        <field name="name"/>
+                                    </h2>
+                                    <div class="font-clr">
+                                        <field name="c_code"/>
+                                    </div>
+                                    <br/>
+                                    <field name="state"/>
+                                    <br/>
+                                    <field name="val"/>
+                                </div>
+                                <div class="float-child2">
+                                    <field name="img" widget="image" class="img"/>
+                                </div>
+                            </div>
+                            <div class="o_dropdown_kanban o_dropdown">
+                                <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown"
+                                   data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                    <span class="fa fa-ellipsis-v"/>
+                                </a>
+                                <div class="dropdown-menu" role="menu">
+                                    <!--    Ex 5 Ques 31-->
+                                    <a role="menuitem" type="open" class="dropdown-item">Open</a>
+                                    <!--    Ex 5 Ques 30-->
+                                    <t t-if="widget.editable">
+                                        <a role="menuitem" type="edit" class="dropdown-item">Edit</a>
+                                    </t>
+                                    <!--    Ex 5 Ques 32-->
+                                    <t t-if="widget.deletable">
+                                        <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                    </t>
+                                    <!--    Ex 5 Ques 33-->
+                                    <div role="separator" class="dropdown-divider"/>
+                                    <a role="menuitem" type="action" name="%(action_fans_alt)d" class="dropdown-item">
+                                        View Fans
+                                    </a>
+                                    <!--    Ex 5 Ques 34-->
+                                    <div role="separator" class="dropdown-divider"/>
+                                    <a role="menuitem" type="object" name="update_rec" class="dropdown-item">Update
+                                        Circuit Record
+                                    </a>
+                                    <!--Ex 7 Ques 10-->
+                                    <div role="separator" class="dropdown-divider"/>
+                                    <a role="menuitem" type="action" name="%(formula1.action_entry_fees_wiz)d"
+                                       class="dropdown-item">
+                                        Update Entry Fees
+                                    </a>
+                                    <!--    Ex 5 Ques 29-->
+                                    <div role="separator" class="dropdown-divider"/>
+                                    <ul class="oe_kanban_colorpicker" data-field="clr"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_constructors_redbull" model="ir.actions.act_window">
+        <field name="name">Redbull</field>
+        <field name="res_model">formula1.constructors</field>
+        <field name="view_mode">tree,form,calendar,graph</field>
+        <field name="domain">[('engine','=','redbull')]</field>
+        <field name="context">{'default_engine':'redbull'}</field>
+        <!--    Ex 5 Ques 39-->
+        <field name="search_view_id" ref="view_constructors_search"/>
+        <!--        <field name="context">{'form_view_ref':'formula1.view_constructors_form_engine','default_engine':'redbull'}</field>-->
+        <!--        <field name="context">{'tree_view_ref':'formula1.view_constructors_tree_engine','default_engine':'redbull'}</field>-->
+        <!--        <field name="context">{'calendar_view_ref':'formula1.view_constructors_calendar_alt','default_engine':'redbull'}</field>-->
+        <!--        <field name="context">{'graph_view_ref':'formula1.view_constructors_graph_alt','default_engine':'redbull'}</field>-->
+    </record>
+
+    <!--    Ex 5 Ques 38-->
+    <record id="redbull_constructors_tree_view" model="ir.actions.act_window.view">
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_constructors_tree_engine"/>
+        <field name="act_window_id" ref="action_constructors_redbull"/>
+    </record>
+    <record id="redbull_constructors_form_view" model="ir.actions.act_window.view">
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_constructors_form_engine"/>
+        <field name="act_window_id" ref="action_constructors_redbull"/>
+    </record>
+    <record id="redbull_constructors_calendar_view" model="ir.actions.act_window.view">
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="view_constructors_calendar_alt"/>
+        <field name="act_window_id" ref="action_constructors_redbull"/>
+    </record>
+    <record id="redbull_constructors_graph_view" model="ir.actions.act_window.view">
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_constructors_graph_alt"/>
+        <field name="act_window_id" ref="action_constructors_redbull"/>
+    </record>
+
+    <!--    Ex 5 Ques 37-->
+    <record id="action_constructors_mercedes" model="ir.actions.act_window">
+        <field name="name">Mercedes</field>
+        <field name="res_model">formula1.constructors</field>
+        <field name="view_mode">tree,form,calendar,graph</field>
+        <field name="domain">[('engine','=','mercedes')]</field>
+        <field name="search_view_id" ref="view_constructors_search"/>
+        <field name="context">{'form_view_ref':'formula1.view_constructors_form_engine','default_engine':'mercedes'}
+        </field>
+        <field name="context">{'tree_view_ref':'formula1.view_constructors_tree_engine','default_engine':'mercedes'}
+        </field>
+        <field name="context">
+            {'calendar_view_ref':'formula1.view_constructors_calendar_alt','default_engine':'mercedes'}
+        </field>
+        <field name="context">{'graph_view_ref':'formula1.view_constructors_graph_alt','default_engine':'mercedes'}
+        </field>
+    </record>
+
+    <record id="action_constructors_ferrari" model="ir.actions.act_window">
+        <field name="name">Ferrari</field>
+        <field name="res_model">formula1.constructors</field>
+        <field name="view_mode">tree,form,calendar,graph</field>
+        <field name="domain">[('engine','=','ferrari')]</field>
+        <field name="search_view_id" ref="view_constructors_search"/>
+        <field name="context">{'form_view_ref':'formula1.view_constructors_form_engine','default_engine':'ferrari'}
+        </field>
+        <field name="context">{'tree_view_ref':'formula1.view_constructors_tree_engine','default_engine':'ferrari'}
+        </field>
+        <field name="context">
+            {'calendar_view_ref':'formula1.view_constructors_calendar_alt','default_engine':'ferrari'}
+        </field>
+        <field name="context">{'graph_view_ref':'formula1.view_constructors_graph_alt','default_engine':'ferrari'}
+        </field>
+    </record>
+
+    <record id="action_constructors_renault" model="ir.actions.act_window">
+        <field name="name">Renault</field>
+        <field name="res_model">formula1.constructors</field>
+        <field name="view_mode">tree,form,calendar,graph</field>
+        <field name="domain">[('engine','=','renault')]</field>
+        <field name="search_view_id" ref="view_constructors_search"/>
+        <field name="context">{'form_view_ref':'formula1.view_constructors_form_engine','default_engine':'renault'}
+        </field>
+        <field name="context">{'tree_view_ref':'formula1.view_constructors_tree_engine','default_engine':'renault'}
+        </field>
+        <field name="context">
+            {'calendar_view_ref':'formula1.view_constructors_calendar_alt','default_engine':'renault'}
+        </field>
+        <field name="context">{'graph_view_ref':'formula1.view_constructors_graph_alt','default_engine':'renault'}
+        </field>
+    </record>
+    <record id="action_constructors_max" model="ir.actions.act_window">
+        <field name="name">Max</field>
+        <field name="res_model">formula1.constructors</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[('driver_id','=',1)]</field>
+        <field name="context">{'tree_view_ref':'formula1.view_constructors_tree_max','default_driver_id':'1'}
+        </field>
+    </record>
+    <record id="action_constructors_charles" model="ir.actions.act_window">
+        <field name="name">Max</field>
+        <field name="res_model">formula1.constructors</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[('driver_id','=',2)]</field>
+        <field name="context">{'tree_view_ref':'formula1.view_constructors_tree_charles','default_driver_id':'2'}
+        </field>
+    </record>
+    <record id="action_constructors_jehan" model="ir.actions.act_window">
+        <field name="name">Max</field>
+        <field name="res_model">formula1.constructors</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[('driver_id','=',3)]</field>
+        <field name="context">{'tree_view_ref':'formula1.view_constructors_tree_jehan','default_driver_id':'3'}
+        </field>
+    </record>
+
+
+    <menuitem id="menu_constructors_main" name="Formula1 Fan Management"/>
+    <menuitem id="menu_constructors_sub" name="Constructors Info" parent="formula1.menu_constructors_main"/>
+    <menuitem id="menu_constructors_sub_1" name="All Constructors" parent="formula1.menu_constructors_sub"
+              action="formula1.action_constructors"/>
+    <menuitem id="menu_constructors_redbull" name="Redbull Supplied Constructors" action="action_constructors_redbull"
+              parent="menu_constructors_sub"/>
+    <menuitem id="menu_constructors_mercedes" name="Mercedes Supplied Constructors"
+              action="action_constructors_mercedes" parent="menu_constructors_sub"/>
+    <menuitem id="menu_constructors_ferrari" name="Ferrari Supplied Constructors" action="action_constructors_ferrari"
+              parent="menu_constructors_sub"/>
+    <menuitem id="menu_constructors_renault" name="Renault Supplied Constructors" action="action_constructors_renault"
+              parent="menu_constructors_sub"/>
+
+    <record id="view_driver_form" model="ir.ui.view">
+        <field name="name">view.driver.form</field>
+        <field name="model">formula1.driver</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="%(action_update_driver_wins)d" type="action" string="Update Wins"
+                            context="{'default_d_id':active_id}"/>
+                    <!--Ex 7 Ques 7-->
+                    <button name="update_driver_wins_2" type="object" string="Update Wins Alt"/>
+                    <field name="d_state" widget="statusbar" statusbar_visible="d1,d2,d3,d4,d5" clickable="1"/>
+                </header>
+                <sheet>
+                    <!--                    Ex 5 Ques 12-->
+                    <widget name="web_ribbon" title="Legendary Driver" bg_color="bg-success"
+                            attrs="{'invisible': [('d_state', '!=', 'd1')]}"/>
+                    <!--                    Ex 5 Ques 13-->
+                    <widget name="web_ribbon" title="Veteran Driver" bg_color="bg-warning"
+                            attrs="{'invisible': [('d_state', '!=', 'd2')]}"/>
+                    <field name="img" widget="image" class="img"/>
+                    <group colspan="4" col="4">
+                        <field name="clr" widget="color_picker"/>
+                        <field name="d_no"/>
+                        <field name="name"/>
+                        <field name="salary"/>
+                        <field name="d_code"/>
+                        <field name="fan_id"/>
+                        <field name="d_o_b"/>
+                        <field name="age"/>
+                        <field name="d_nation"/>
+                        <field name="d_wins"/>
+                        <field name="d_podiums"/>
+                    </group>
+                    <!--                    <separator string="Test Driver"/>-->
+                </sheet>
+                <button name="write"
+                        string="Default Get button"
+                        type="object"/>
+            </form>
+        </field>
+    </record>
+    <record id="view_driver_tree" model="ir.ui.view">
+        <field name="name">view.driver.tree</field>
+        <field name="model">formula1.driver</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="d_no"/>
+                <!--                Ex 5 Ques 10-->
+                <field name="salary" avg="Average Salary"/>
+                <!--sum="Sum of Salaries"-->
+                <!--                Ex 5 Ques 8-->
+                <field name="d_code" optional="show"/>
+                <field name="age" optional="show"/>
+                <field name="d_nation" optional="show"/>
+                <field name="d_wins" optional="show"/>
+                <field name="d_podiums" optional="hide"/>
+                <field name="d_state" widget="badge" decoration-success="d_state=='d1'"
+                       decoration-warning="d_state=='d2'"
+                       decoration-danger="d_state=='d3'" decoration-info="d_state=='d4'"
+                       decoration-primary="d_state=='d5'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    Ex 5 Ques 23-->
+    <record id="view_driver_graph" model="ir.ui.view">
+        <field name="name">view.driver.graph</field>
+        <field name="model">formula1.driver</field>
+        <field name="arch" type="xml">
+            <graph type="pie">
+                <field name="name" type="row"/>
+                <field name="salary" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_driver_pivot" model="ir.ui.view">
+        <field name="name">view.driver.pivot</field>
+        <field name="model">formula1.driver</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="name" type="row"/>
+                <!--    Ex 5 Ques 25-->
+                <!--                <field name="d_o_b" type="row" interval="quarter"/>-->
+                <!--    Ex 5 Ques 26-->
+                <field name="d_o_b" type="row" interval="month"/>
+                <field name="salary" type="measure"/>
+                <field name="age" type="measure"/>
+                <field name="d_wins" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_driver_kanban" model="ir.ui.view">
+        <field name="name">view.driver.kanban</field>
+        <field name="model">formula1.driver</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="d_state">
+                <field name="d_no"/>
+                <field name="name"/>
+                <field name="salary"/>
+                <field name="d_code"/>
+                <field name="d_o_b"/>
+                <field name="age"/>
+                <field name="d_nation"/>
+                <field name="d_wins"/>
+                <field name="d_podiums"/>
+                <field name="img"/>
+                <field name="clr"/>
+                <progressbar field="d_state"
+                             colors='{"d1": "info", "d2": "warning", "d3":"primary","d4":"danger","d5":"success"}'/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{!selection_mode ? kanban_color(record.clr.raw_value) : ''} oe_kanban_card oe_kanban_global_click">
+                            <div class="float-container">
+                                <div class="float-child1">
+                                    <h2>
+                                        <field name="name"/>
+                                    </h2>
+                                    <div class="font-clr">
+                                        <field name="d_code"/>
+                                    </div>
+                                    <br/>
+                                    <field name="salary"/>
+                                    <br/>
+                                    <field name="d_nation"/>
+                                </div>
+                                <div class="float-child2">
+                                    <field name="img" widget="image" class="img"/>
+                                </div>
+                            </div>
+                            <div class="o_dropdown_kanban o_dropdown">
+                                <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown"
+                                   data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                    <span class="fa fa-ellipsis-v"/>
+                                </a>
+                                <div class="dropdown-menu" role="menu">
+                                    <a role="menuitem" type="open" class="dropdown-item">Open</a>
+                                    <t t-if="widget.editable">
+                                        <a role="menuitem" type="edit" class="dropdown-item">Edit</a>
+                                    </t>
+                                    <t t-if="widget.deletable">
+                                        <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                    </t>
+                                    <div role="separator" class="dropdown-divider"/>
+                                    <ul class="oe_kanban_colorpicker" data-field="clr"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_driver" model="ir.actions.act_window">
+        <field name="name">Drivers</field>
+        <field name="res_model">formula1.driver</field>
+        <field name="view_mode">tree,form,graph,pivot</field>
+        <!--        <field name="domain">[('name','like','a')]</field>-->
+        <field name="context">{'default_name':'Max Verstappen'}</field>
+    </record>
+
+    <menuitem id="menu_driver_main" name="Team Drivers" parent="formula1.menu_constructors_main"/>
+    <menuitem id="menu_driver_sub" name="Main Drivers" parent="formula1.menu_driver_main"
+              action="formula1.action_driver"/>
+
+    <record id="view_fans_form" model="ir.ui.view">
+        <field name="name">view.fans.form</field>
+        <field name="model">formula1.fans</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group colspan="4" col="4">
+                        <field name="fan_id"/>
+                        <field name="fan_name"/>
+                        <field name="constr"/>
+                        <field name="d_id"/>
+                        <field name="fan_h"/>
+                        <field name="fan_w"/>
+                        <field name="fan_age"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_fans_tree" model="ir.ui.view">
+        <field name="name">view.fans.tree</field>
+        <field name="model">formula1.fans</field>
+        <field name="arch" type="xml">
+            <!--            Ex 5 Ques 2,3,4,5-->
+            <!--            <tree editable="bottom" create="1" delete="1" default_order="fan_name">-->
+            <tree>
+                <field name="fan_id"/>
+                <field name="fan_name"/>
+                <field name="constr"/>
+                <field name="d_id"/>
+                <field name="fan_h"/>
+                <field name="fan_w"/>
+                <field name="fan_age"/>
+                <field name="fan_desc_1"/>
+                <field name="fan_desc_2"/>
+                <field name="perc" widget="progressbar"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_fans_search" model="ir.ui.view">
+        <field name="name">view.fans.search</field>
+        <field name="model">formula1.fans</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="fan_id"/>
+                <field name="fan_name"/>
+                <field name="constr"/>
+                <field name="d_id"/>
+                <field name="fan_h"/>
+                <field name="fan_w"/>
+                <field name="fan_age"/>
+            </search>
+        </field>
+    </record>
+
+    <!--    Ex 5 Ques 24-->
+    <record id="view_fans_pivot" model="ir.ui.view">
+        <field name="name">view.fans.pivot</field>
+        <field name="model">formula1.fans</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="constr" type="row"/>
+                <field name="d_id"/>
+                <field name="fan_name" type="col"/>
+                <field name="fan_h" type="measure"/>
+                <field name="fan_w" type="measure"/>
+                <field name="fan_age" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!--    <record id="fans_search_view" model="ir.actions.act_window.view">-->
+    <!--        <field name="view_mode">search</field>-->
+    <!--        <field name="view_id" ref="view_fans_search"/>-->
+    <!--        <field name="act_window_id" ref="action_fans"/>-->
+    <!--    </record>-->
+
+
+    <menuitem id="menu_fans_main" name="Fans" parent="formula1.menu_constructors_main"/>
+    <menuitem id="menu_fans_sub" name="Driver Fans" parent="formula1.menu_fans_main" action="formula1.action_fans"/>
+
+    <record id="view_circuit_form" model="ir.ui.view">
+        <field name="name">view.circuit.form</field>
+        <field name="model">formula1.circuit</field>
+        <field name="arch" type="xml">
+            <!--            Ex 5 Ques 11-->
+            <form create="1" edit="1" delete="1">
+                <sheet>
+                    <field name="img" widget="image" class="img"/>
+                    <group colspan="4" col="4">
+                        <field name="clr" widget="color_picker"/>
+                        <field name="c_name"/>
+                        <field name="const_cost"/>
+                        <field name="driver_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_circuit_tree" model="ir.ui.view">
+        <field name="name">view.circuit.tree</field>
+        <field name="model">formula1.circuit</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="c_name"/>
+                <!--                Ex 5 Ques 9-->
+                <field name="const_cost" sum="Total Cost Of Circuit Construction"/>
+                <field name="driver_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    Ex 5 Ques 22-->
+    <record id="view_circuit_graph" model="ir.ui.view">
+        <field name="name">view.circuit.graph</field>
+        <field name="model">formula1.circuit</field>
+        <field name="arch" type="xml">
+            <graph type="line">
+                <field name="c_name" type="row"/>
+                <field name="const_cost" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_circuit_pivot" model="ir.ui.view">
+        <field name="name">view.circuit.pivot</field>
+        <field name="model">formula1.circuit</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="c_name" type="row"/>
+                <field name="driver_id" type="col"/>
+                <field name="const_cost" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_circuit_kanban" model="ir.ui.view">
+        <field name="name">view.circuit.kanban</field>
+        <field name="model">formula1.circuit</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="c_name"/>
+                <field name="driver_id"/>
+                <field name="const_cost"/>
+                <field name="img"/>
+                <field name="clr"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{!selection_mode ? kanban_color(record.clr.raw_value) : ''} oe_kanban_card oe_kanban_global_click">
+                            <div class="float-container">
+                                <div class="float-child1">
+                                    <h2>
+                                        <field name="c_name"/>
+                                    </h2>
+                                    <div class="font-clr">
+                                        <field name="const_cost"/>
+                                    </div>
+                                </div>
+                                <div class="float-child2">
+                                    <field name="img" widget="image" class="img"/>
+                                </div>
+                            </div>
+                            <div class="o_dropdown_kanban o_dropdown">
+                                <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown"
+                                   data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                    <span class="fa fa-ellipsis-v"/>
+                                </a>
+                                <div class="dropdown-menu" role="menu">
+                                    <a role="menuitem" type="open" class="dropdown-item">Open</a>
+                                    <t t-if="widget.editable">
+                                        <a role="menuitem" type="edit" class="dropdown-item">Edit</a>
+                                    </t>
+                                    <t t-if="widget.deletable">
+                                        <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                    </t>
+                                    <div role="separator" class="dropdown-divider"/>
+                                    <a role="menuitem" type="object" name="update_rec" class="dropdown-item">Update
+                                        Circuit Record
+                                    </a>
+                                    <div role="separator" class="dropdown-divider"/>
+                                    <ul class="oe_kanban_colorpicker" data-field="clr"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_circuit" model="ir.actions.act_window">
+        <field name="name">Circuits</field>
+        <field name="res_model">formula1.circuit</field>
+        <field name="view_mode">kanban,tree,form,graph,pivot</field>
+    </record>
+
+    <menuitem id="menu_circuit_main" name='Circuits' parent="formula1.menu_constructors_main"/>
+    <menuitem id="menu_circuit_sub" name='Season Circuits' parent="formula1.menu_circuit_main"
+              action="formula1.action_circuit"/>
+
+    <record id="view_part_form" model="ir.ui.view">
+        <field name="name">view.part.form</field>
+        <field name="model">formula1.part</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="ps_id"/>
+                        <field name="ps_name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_part_tree" model="ir.ui.view">
+        <field name="name">view.part.tree</field>
+        <field name="model">formula1.part</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ps_id"/>
+                <field name="ps_name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_part" model="ir.actions.act_window">
+        <field name="name">Parts</field>
+        <field name="res_model">formula1.part</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_part_main" name='Part Supplier' parent="formula1.menu_constructors_sub"
+              action="formula1.action_part"/>
+</odoo>

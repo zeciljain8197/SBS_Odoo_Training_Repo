@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_update_fans_wiz_form" model="ir.ui.view">
+        <field name="name">view.update.fans.wiz.form</field>
+        <field name="model">update.fans</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="fan_id"/>
+                    <field name="name"/>
+                    <field name="constr_name"/>
+                    <field name="fan_h"/>
+                    <field name="fan_w"/>
+                    <field name="fan_age"/>
+                </group>
+                <footer>
+                    <button name="update_fans" type="object" class="btn-primary" string="Update Fan Records"/>
+                    <button special="cancel" string="Close" class="btn-danger"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_fans_wiz" model="ir.actions.act_window">
+        <field name="name">New Fan Entries</field>
+        <field name="res_model">update.fans</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

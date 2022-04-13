@@ -1,0 +1,20 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_constructors_owner,access.constructors.owner,model_formula1_constructors,grp_formula1_owner,1,1,1,1
+access_constructors_team_p,access.constructors.team_p,model_formula1_constructors,grp_formula1_team_p,1,1,1,0
+access_constructors_driver,access.constructors.driver,model_formula1_constructors,grp_formula1_driver,1,1,0,0
+access_driver_team_p, access.driver.team_p,model_formula1_driver,grp_formula1_team_p,1,1,1,1
+access_driver_driver,access.driver.driver,model_formula1_driver,grp_formula1_driver,1,1,0,0
+access_fans_driver,access.fans.driver,model_formula1_fans,grp_formula1_driver,1,1,1,1
+access_circuit_owner,access.circuit.owner,model_formula1_circuit,grp_formula1_owner,1,1,1,1
+access_part_owner,access.part.owner,model_formula1_part,grp_formula1_owner,1,1,1,1
+access_update_entry_fees_owner,access.update.entry.fees.owner,model_update_entry_fees,grp_formula1_owner,1,1,1,1
+access_update_fans_owner,access.update.fans.owner,model_update_fans,grp_formula1_owner,1,1,1,1
+access_update_circuit_cost_owner,access.update.circuit.cost.owner,model_update_circuit_cost,grp_formula1_owner,1,1,1,1
+access_update_driver_wins_owner,access.update.driver.wins.owner,model_update_driver_wins,grp_formula1_owner,1,1,1,1
+access_update_fans_alt_owner,access.update.fans.alt.owner,model_update_fans_alt,grp_formula1_owner,1,1,1,1
+access_view_constr_owner,access.view.constr.owner,model_view_constr,grp_formula1_owner,1,1,1,1
+access_constructor_analysis_report_owner,access.constructor.analysis.report.owner,model_constructor_analysis,grp_formula1_owner,1,1,1,1
+access_constructor_report_wizard_owner,access.constructor.report.wizard.owner,model_constructor_report_wizard,grp_formula1_owner,1,1,1,1
+access_constructor_report_wizard_simple_owner,access.constructor.report.wizard.simple.owner,model_constructor_report_wizard_simple,grp_formula1_owner,1,1,1,1
+access_overall_report_wizard_owner,access.overall.report.wizard.owner,model_overall_report_wizard,grp_formula1_owner,1,1,1,1
+access_constructor_xls_report_wiz_owner,access.constructor.xls.report.wiz.owner,model_constructor_xls_report_wiz,grp_formula1_owner,1,1,1,1

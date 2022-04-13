@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="constructor_report_html" model="ir.actions.report">
+        <field name="name">Constructor Report(HTML)</field>
+        <field name="model">formula1.constructors</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">formula1.report_constructor</field>
+        <field name="report_file">formula1.report_constructor</field>
+        <field name="binding_model_id" ref="model_formula1_constructors"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="constructor_report_pdf" model="ir.actions.report">
+        <field name="name">Constructor Report(PDF)</field>
+        <field name="model">formula1.constructors</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">formula1.report_constructor</field>
+        <field name="report_file">formula1.report_constructor</field>
+        <field name="binding_model_id" ref="model_formula1_constructors"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

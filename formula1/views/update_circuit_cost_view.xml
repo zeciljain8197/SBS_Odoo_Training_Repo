@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_update_cir_cost_form" model="ir.ui.view">
+        <field name="name">view.update.cir.cost.form</field>
+        <field name="model">update.circuit.cost</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="c_id"/>
+                    <field name="const_cost"/>
+                </group>
+                <footer>
+                    <button name="update_circuit_cost" type="object" class="btn-primary" string="Update Circuit Cost"/>
+                    <button special="cancel" string="Close" class="btn-danger"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_circuit_cost" model="ir.actions.act_window">
+        <field name="name">Update Circuit Cost</field>
+        <field name="res_model">update.circuit.cost</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

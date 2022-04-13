@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Template of Student Report -->
+    <template id="report_constructor">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <h1 class="text-center">Constructor Report</h1>
+                        <br/>
+                        <br/>
+                        <table class="table">
+                            <tr>
+                                <td>Name</td>
+                                <td>
+                                    <span t-field="o.name"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        User Name:
+                        <span t-esc="zinu"/>
+                        <br/>
+                        TimeStamp:
+                        <span t-esc="time_stamp"/>
+                        <br/>
+                        <span t-if="data.get('form',{})" t-esc="data['form']['driver_id'][1]"/>
+                        <!--Ex 8 Ques 6-->
+                        <img t-if="o.img" t-att-src="image_data_uri(o.img)" style="max-height:85pt;max-width:90%"
+                             alt="Constructor Image"/>
+                        <div id="informations" class="row mt32 mb32">
+                            <div class="col-auto col-3 mw-100 mb-2" t-if="o.driver_id" name="Driver">
+                                <strong>Driver</strong>
+                                <p class="m-0" t-field="o.driver_id.name"/>
+                            </div>
+                            <div class="col-auto col-3 mw-100 mb-2" name="engine">
+                                <strong>Engine</strong>
+                                <p class="m-0" t-field="o.engine"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', c_code, 600, 100)"
+                             style="width:350px;height:60px;"/>
+                        <div id="result" class="row mt32 mb32">
+                            <div class="col-auto col-3 mw-100 mb-2" t-if="o.driver_id" name="Driver">
+                                <strong>Total Fan Description 1</strong>
+                                <p class="m-0" t-esc="get_total_fan_desc_1(o.fan_ids)"/>
+                            </div>
+                            <div class="col-auto col-3 mw-100 mb-2" name="engine">
+                                <strong>Total Fan Description 2</strong>
+                                <p class="m-0" t-esc="get_total_fan_desc_2(o.fan_ids)"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

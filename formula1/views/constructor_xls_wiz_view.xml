@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_constructor_xls_report_wiz_form" model="ir.ui.view">
+        <field name="name">view.constructor.xls.report.wiz.form</field>
+        <field name="model">constructor.xls.report.wiz</field>
+        <field name="arch" type="xml">
+            <form>
+                <group colspan="4" col="4">
+                    <field name="type" required="1"/>
+                    <field name="driver_id"
+                           attrs="{'invisible':[('type','!=','driver')], 'required':[('type','=','driver')]}"/>
+                </group>
+                <separator string="Fans"
+                           attrs="{'invisible':[('type','!=','fan')], 'required':[('type','=','fan')]}"/>
+                <field name="fan_ids"
+                       attrs="{'invisible':[('type','!=','fan')], 'required':[('type','=','fan')]}"/>
+                <footer>
+                    <button name="print_xls_report"
+                            string="Print"
+                            type="object"
+                            class="btn-primary"/>
+                    <button special="cancel" string="Close"/>
+                </footer>
+            </form>
+        </field>
+
+    </record>
+
+    <record id="action_constructor_xls_report" model="ir.actions.act_window">
+        <field name="name">Constructor XLS</field>
+        <field name="res_model">constructor.xls.report.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_constructor_xls" action="action_constructor_xls_report" parent="menu_reporting"/>
+</odoo>
